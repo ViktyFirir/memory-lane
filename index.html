@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Сохраним память вместе</title>
+    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+        <div class="preloader-years">1941 — 1945</div>
+        <div class="preloader-title">СОХРАНИМ ПАМЯТЬ ВМЕСТЕ</div>
+        <div class="preloader-line"><span id="preloaderProgress"></span></div>
+        <div class="preloader-percent" id="preloaderPercent">00%</div>
+    </div>
+</div>
+
+<header class="main-header">
+    <nav class="navbar">
+        <button class="burger-menu" id="burgerToggle" aria-label="Открыть меню">
+            <span></span><span></span><span></span>
+        </button>
+
+        <div class="nav-group">
+            <a href="#top" class="nav-link active">Главная</a>
+            <a href="#heroes" class="nav-link">Герои</a>
+        </div>
+
+        <a href="#top" class="logo-container" aria-label="На главную">
+            <div class="logo-circle">
+                <img src="./img/logo.png" alt="Логотип" class="logo-img">
+            </div>
+        </a>
+
+        <div class="nav-group">
+            <a href="#history" class="nav-link">История</a>
+            <a href="#battles" class="nav-link">Битвы</a>
+        </div>
+    </nav>
+</header>
+
+<div class="side-panel" id="sidePanel" aria-hidden="true">
+    <button class="close-btn" id="closePanel" aria-label="Закрыть меню">✕</button>
+    <nav class="side-nav">
+        <a href="#top">Главная</a>
+        <a href="#heroes">Герои</a>
+        <a href="#history">История</a>
+        <a href="#battles">Битвы</a>
+        <a href="#map">Карта</a>
+        <a href="#chronicle">Хроника</a>
+    </nav>
+</div>
+
+<main class="main-content" id="top">
+
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img class="hero-mark" src="./img/Vector.png" alt="" aria-hidden="true">
+            <div class="eyebrow" data-typewriter>ПАМЯТЬ • ИСТОРИЯ • ЛЮДИ</div>
+            <h1 data-typewriter>Сохраним <em>память</em> вместе</h1>
+            <span class="hero-rule" aria-hidden="true"></span>
+            <p data-typewriter>Их голоса, их письма, их подвиг. Сохраним память о поколении, которое спасло мир.</p>
+            <div class="hero-after">
+                <div class="hero-actions">
+                    <a href="#heroes" class="btn-primary">Начать путешествие</a>
+                    <a href="#chronicle" class="btn-ghost">Хроника 1941–1945</a>
+                </div>
+                <ul class="hero-stats">
+                    <li><strong>1418</strong><span>дней войны</span></li>
+                    <li><strong>1941–1945</strong><span>годы памяти</span></li>
+                    <li><strong>миллионы</strong><span>человеческих судеб</span></li>
+                </ul>
+            </div>
+        </div>
+        <a href="#about" class="hero-scroll" aria-label="Прокрутить вниз">
+            <span>листайте</span><i aria-hidden="true"></i>
+        </a>
+    </section>
+
+    <div class="section-rule"><span></span></div>
+
+    <section class="info-card reveal" id="about">
+        <div class="card-image image-reveal">
+            <img src="./img/soldats-foto.png" alt="Герои Великой Отечественной войны" loading="eager">
+        </div>
+        <div class="card-text">
+            <div class="section-kicker">01 / ЛЮДИ</div>
+            <h2 class="title-large">Герои Великой Отечественной войны. Настоящие истории советских солдат</h2>
+            <p class="desc-large">Во время Великой Отечественной войны за подвиги на фронте и за его пределами государственные награды получили миллионы бойцов и тружеников тыла. За каждой цифрой стоял человек, его выбор, страх, мужество и судьба.</p>
+            <a href="#heroes" class="btn-secondary">Смотреть героев <span>↗</span></a>
+        </div>
+    </section>
+
+    <section class="content-panel reveal" id="heroes">
+        <div class="slider-header-container">
+            <div class="section-kicker">02 / ГЕРОИ</div>
+            <h2 class="panel-title">Лица, за которыми стоят судьбы</h2>
+            <p class="panel-subtitle">Не просто имена в учебнике. Люди, чьи истории помогают почувствовать масштаб времени.</p>
+        </div>
+
+        <div class="slider-action-bar">
+            <div class="red-info-badge">За каждой битвой на карте — судьбы людей. Их подвиг заслуживает того, чтобы знать их в лицо и по имени.</div>
+            <div class="action-group">
+                <a href="#heroes" class="btn-view-all">Посмотреть всех</a>
+                <button class="btn-arrow-circle hero-scroll-next" type="button" aria-label="Следующие герои">→</button>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-arrow prev" type="button" aria-label="Предыдущие герои">←</button>
+            <div class="cards-viewport">
+                <div class="cards-wrapper">
+                    <article class="hero-card">
+                        <div class="hero-img-box"><img src="./img/gerois/f1.png" alt="Вера Захаровна Хоружая" loading="lazy"></div>
+                        <div class="hero-info">
+                            <span class="card-number">01</span>
+                            <h3>Вера Захаровна Хоружая</h3>
+                            <p>Одна из руководителей подполья в Витебской области. Герой Советского Союза.</p>
+                            <div class="card-action-group">
+                                <button class="btn-card-more" type="button" data-open-modal aria-haspopup="dialog">Узнать больше</button>
+                                <button class="btn-card-info" type="button" data-open-modal aria-haspopup="dialog" aria-label="Краткая справка" title="Краткая справка">i</button>
+                            </div>
+                            <template class="modal-tpl">
+                                <div class="modal-layout">
+                                    <div class="modal-body">
+                                        <span class="modal-kicker">ГЕРОЙ · 01</span>
+                                <h3 class="modal-title">Вера Захаровна Хоружая</h3>
+                                <p class="modal-meta">1903 — 1942 · Герой Советского Союза</p>
+                                <p class="modal-text">Родилась 27 сентября 1903 года в Бобруйске. Ещё до войны участвовала в подпольной борьбе в Западной Беларуси и побывала в польских тюрьмах. В августе 1942 года вместе с группой подпольщиков отправилась в Витебск и стала одним из руководителей подполья в оккупированной области. 13 ноября 1942 года была схвачена, в том же месяце казнена. Звание Героя Советского Союза присвоено посмертно 17 мая 1960 года.</p>
+                                    </div>
+                                    <figure class="modal-figure"><img class="modal-photo" src="./img/gerois/f1.png" alt="Вера Захаровна Хоружая"></figure>
+                                </div>
+                            </template>
+                        </div>
+                    </article>
+
+                    <article class="hero-card">
+                        <div class="hero-img-box"><img src="./img/gerois/f2.png" alt="Иван Андреевич Счастный" loading="lazy"></div>
+                        <div class="hero-info">
+                            <span class="card-number">02</span>
+                            <h3>Иван Андреевич Счастный</h3>
+                            <p>Один из организаторов и руководителей Скидельского комсомольско-молодёжного подполья.</p>
+                            <div class="card-action-group">
+                                <button class="btn-card-more" type="button" data-open-modal aria-haspopup="dialog">Узнать больше</button>
+                                <button class="btn-card-info" type="button" data-open-modal aria-haspopup="dialog" aria-label="Краткая справка" title="Краткая справка">i</button>
+                            </div>
+                            <template class="modal-tpl">
+                                <div class="modal-layout">
+                                    <div class="modal-body">
+                                        <span class="modal-kicker">ГЕРОЙ · 02</span>
+                                <h3 class="modal-title">Иван Андреевич Счастный</h3>
+                                <p class="modal-meta">1925 — 1942 · Комсомолец-подпольщик</p>
+                                <p class="modal-text">Родился 23 февраля 1925 года в деревне Черлёна Гродненской области. Учился в ремесленном училище в Гродно. С первых дней оккупации вошёл в подполье, а в сентябре 1941 года возглавил комсомольскую группу в Скиделе: распространял листовки и сводки Совинформбюро, передавал партизанам разведданные, оружие и боеприпасы. Арестован по доносу провокатора и 13 сентября 1942 года казнён вместе с товарищами. Посмертно награждён орденом Отечественной войны II степени.</p>
+                                    </div>
+                                    <figure class="modal-figure"><img class="modal-photo" src="./img/gerois/f2.png" alt="Иван Андреевич Счастный"></figure>
+                                </div>
+                            </template>
+                        </div>
+                    </article>
+
+                    <article class="hero-card">
+                        <div class="hero-img-box"><img src="./img/gerois/f3.png" alt="Курбатов Михаил Тихонович" loading="lazy"></div>
+                        <div class="hero-info">
+                            <span class="card-number">03</span>
+                            <h3>Курбатов Михаил Тихонович</h3>
+                            <p>Младший сержант, командир отделения. Герой Советского Союза, погиб в боях за Гродно.</p>
+                            <div class="card-action-group">
+                                <button class="btn-card-more" type="button" data-open-modal aria-haspopup="dialog">Узнать больше</button>
+                                <button class="btn-card-info" type="button" data-open-modal aria-haspopup="dialog" aria-label="Краткая справка" title="Краткая справка">i</button>
+                            </div>
+                            <template class="modal-tpl">
+                                <div class="modal-layout">
+                                    <div class="modal-body">
+                                        <span class="modal-kicker">ГЕРОЙ · 03</span>
+                                <h3 class="modal-title">Курбатов Михаил Тихонович</h3>
+                                <p class="modal-meta">1924 — 1944 · Герой Советского Союза</p>
+                                <p class="modal-text">Родился 15 января 1924 года в посёлке Магдагачи. На фронте с апреля 1942 года, был дважды ранен. 28 июня 1944 года в бою за Могилёв, приняв командование взводом, гранатами уничтожил вражеский дзот и открыл путь наступающему подразделению. 18 июля 1944 года погиб в бою за плацдарм на Немане у Гродно. Ему было 20 лет. Звание Героя Советского Союза присвоено посмертно 24 марта 1945 года.</p>
+                                    </div>
+                                    <figure class="modal-figure"><img class="modal-photo" src="./img/gerois/f3.png" alt="Курбатов Михаил Тихонович"></figure>
+                                </div>
+                            </template>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <button class="nav-arrow next" type="button" aria-label="Следующие герои">→</button>
+        </div>
+        <div class="slider-progress"><span id="heroProgress"></span></div>
+    </section>
+
+    <section class="belarus-history-section reveal" id="history">
+        <div class="history-text">
+            <div class="section-kicker">03 / ПАМЯТЬ БЕЛАРУСИ</div>
+            <h2>Их имена навечно вписаны в историю Беларуси</h2>
+            <p>В этом разделе мы храним имена и лица тех, чьим мужеством и жертвой была добыта Победа. Герои Советского Союза, партизаны, подпольщики, простые солдаты и труженики тыла — все, для кого защита родной земли стала делом чести.</p>
+            <div class="history-note"><span></span><strong>Мы помним каждого.</strong></div>
+        </div>
+        <div class="history-image image-reveal">
+            <img src="./img/veterans.png" alt="Ветераны" loading="lazy">
+            <span class="image-caption">Память начинается с лица.</span>
+        </div>
+    </section>
+
+    <section class="chronicle-intro reveal">
+        <div>
+            <div class="section-kicker">04 / ХРОНИКА</div>
+            <h2>Война, рассказанная по годам</h2>
+        </div>
+        <p>Четыре года, 1418 дней и миллионы человеческих судеб. Хроника становится центральной дорогой сайта.</p>
+    </section>
+
+    <section class="memorial-container reveal" id="chronicle">
+        <header class="top-banner">
+            <div class="banner-card">
+                <div class="flower-icon"><img src="./img/Vector.png" alt=""></div>
+                <div class="banner-small">22 ИЮНЯ 1941 — 9 МАЯ 1945</div>
+                <h2>Дорога Памяти:<br>1941–1945</h2>
+                <p>От трагического начала до победного салюта. По годам — события, переломы и люди, через которых мы видим историю.</p>
+                <a href="#year-1941" class="btn-transparent">Изучить хронику</a>
+            </div>
+        </header>
+
+        <div class="year-section-wrapper">
+            <article class="year-section reveal" id="year-1941">
+                <div class="year-card">
+                    <div class="col-left">
+                        <div class="text-wrap">
+                            <span class="chapter-label">ГЛАВА I</span>
+                            <h3>Год внезапного удара и народного сопротивления</h3>
+                            <p>22 июня — начало войны. Тяжёлые отступления, оборона Брестской крепости, блокада Ленинграда. В декабре контрнаступление под Москвой остановило блицкриг.</p>
+                            <div class="year-actions">
+                                <button class="year-more-btn" type="button" data-open-modal aria-haspopup="dialog">
+                                    <span>Узнать подробнее</span><span class="year-more-arrow" aria-hidden="true">↗</span>
+                                </button>
+                                <button class="year-info-btn" type="button" data-open-modal aria-haspopup="dialog" aria-label="Краткая справка о годе" title="Краткая справка">i</button>
+                            </div>
+                        </div>
+                        <template class="modal-tpl" data-year="1941">
+                            <span class="modal-year">1941</span>
+                            <h3 class="modal-title">Год внезапного удара и народного сопротивления</h3>
+                            <p class="modal-text">Война началась 22 июня 1941 года. В первые месяцы Красная Армия отступала, а оборона Брестской крепости и блокада Ленинграда стали символами стойкости. В декабре советские войска перешли в контрнаступление под Москвой, сорвав план молниеносной войны.</p>
+                        </template>
+                    </div>
+                    <div class="col-center"><div class="glass-red-bar"><span class="year-label">19<br>41</span></div></div>
+                    <div class="col-right"><div class="photo-frame"><img src="./img/year/1941.png" alt="1941 год" loading="lazy"></div></div>
+                </div>
+            </article>
+
+            <article class="year-section reveal">
+                <div class="year-card">
+                    <div class="col-left">
+                        <div class="text-wrap">
+                            <span class="chapter-label">ГЛАВА II</span>
+                            <h3>Год тяжёлых испытаний и перелома</h3>
+                            <p>Лето 1942 года принесло новые тяжёлые бои. В ноябре началось контрнаступление под Сталинградом, а в феврале 1943 года завершилось окружение и разгром группировки противника.</p>
+                            <div class="year-actions">
+                                <button class="year-more-btn" type="button" data-open-modal aria-haspopup="dialog">
+                                    <span>Узнать подробнее</span><span class="year-more-arrow" aria-hidden="true">↗</span>
+                                </button>
+                                <button class="year-info-btn" type="button" data-open-modal aria-haspopup="dialog" aria-label="Краткая справка о годе" title="Краткая справка">i</button>
+                            </div>
+                        </div>
+                        <template class="modal-tpl" data-year="1942">
+                            <span class="modal-year">1942</span>
+                            <h3 class="modal-title">Год тяжёлых испытаний и перелома</h3>
+                            <p class="modal-text">Летом 1942 года немецкое наступление развернулось на юге. Бои за Сталинград стали одним из главных испытаний года. 19 ноября началось советское контрнаступление, завершившееся окружением крупной группировки противника.</p>
+                        </template>
+                    </div>
+                    <div class="col-center"><div class="glass-red-bar"><span class="year-label">19<br>42</span></div></div>
+                    <div class="col-right"><div class="photo-frame"><img src="./img/year/1941.png" alt="1942 год" loading="lazy"></div></div>
+                </div>
+            </article>
+
+            <article class="year-section reveal">
+                <div class="year-card">
+                    <div class="col-left">
+                        <div class="text-wrap">
+                            <span class="chapter-label">ГЛАВА III</span>
+                            <h3>Год окончательного перелома</h3>
+                            <p>Победа под Курском закрепила стратегическую инициативу. Красная Армия начала широкое наступление, освобождая всё новые территории.</p>
+                            <div class="year-actions">
+                                <button class="year-more-btn" type="button" data-open-modal aria-haspopup="dialog">
+                                    <span>Узнать подробнее</span><span class="year-more-arrow" aria-hidden="true">↗</span>
+                                </button>
+                                <button class="year-info-btn" type="button" data-open-modal aria-haspopup="dialog" aria-label="Краткая справка о годе" title="Краткая справка">i</button>
+                            </div>
+                        </div>
+                        <template class="modal-tpl" data-year="1943">
+                            <span class="modal-year">1943</span>
+                            <h3 class="modal-title">Год окончательного перелома</h3>
+                            <p class="modal-text">После победы под Сталинградом и Курской битвы стратегическая инициатива окончательно перешла к Красной Армии. Началось широкое освобождение оккупированных территорий, а Днепр стал одним из важнейших рубежей наступления.</p>
+                        </template>
+                    </div>
+                    <div class="col-center"><div class="glass-red-bar"><span class="year-label">19<br>43</span></div></div>
+                    <div class="col-right"><div class="photo-frame"><img src="./img/year/1941.png" alt="1943 год" loading="lazy"></div></div>
+                </div>
+            </article>
+
+            <article class="year-section reveal">
+                <div class="year-card">
+                    <div class="col-left">
+                        <div class="text-wrap">
+                            <span class="chapter-label">ГЛАВА IV</span>
+                            <h3>Год освобождения</h3>
+                            <p>Летом 1944 года операция «Багратион» стала одним из крупнейших наступлений войны и привела к освобождению Беларуси. Фронт стремительно двигался на запад.</p>
+                            <div class="year-actions">
+                                <button class="year-more-btn" type="button" data-open-modal aria-haspopup="dialog">
+                                    <span>Узнать подробнее</span><span class="year-more-arrow" aria-hidden="true">↗</span>
+                                </button>
+                                <button class="year-info-btn" type="button" data-open-modal aria-haspopup="dialog" aria-label="Краткая справка о годе" title="Краткая справка">i</button>
+                            </div>
+                        </div>
+                        <template class="modal-tpl" data-year="1944">
+                            <span class="modal-year">1944</span>
+                            <h3 class="modal-title">Год освобождения</h3>
+                            <p class="modal-text">Операция «Багратион» летом 1944 года привела к освобождению Беларуси и разгрому крупной группировки немецких войск. Советские войска продолжили движение на запад, приближаясь к границам Германии.</p>
+                        </template>
+                    </div>
+                    <div class="col-center"><div class="glass-red-bar"><span class="year-label">19<br>44</span></div></div>
+                    <div class="col-right"><div class="photo-frame"><img src="./img/year/1941.png" alt="1944 год" loading="lazy"></div></div>
+                </div>
+            </article>
+
+            <article class="year-section reveal">
+                <div class="year-card">
+                    <div class="col-left">
+                        <div class="text-wrap">
+                            <span class="chapter-label">ГЛАВА V</span>
+                            <h3>Год Победы</h3>
+                            <p>Весной 1945 года Красная Армия подошла к Берлину. 9 мая стало днём Победы в Великой Отечественной войне, но память о цене этой победы осталась навсегда.</p>
+                            <div class="year-actions">
+                                <button class="year-more-btn" type="button" data-open-modal aria-haspopup="dialog">
+                                    <span>Узнать подробнее</span><span class="year-more-arrow" aria-hidden="true">↗</span>
+                                </button>
+                                <button class="year-info-btn" type="button" data-open-modal aria-haspopup="dialog" aria-label="Краткая справка о годе" title="Краткая справка">i</button>
+                            </div>
+                        </div>
+                        <template class="modal-tpl" data-year="1945">
+                            <span class="modal-year">1945</span>
+                            <h3 class="modal-title">Год Победы</h3>
+                            <p class="modal-text">Весной 1945 года Красная Армия провела завершающие операции, а 9 мая стало Днём Победы в Великой Отечественной войне. Завершение войны стало итогом 1418 дней борьбы и огромных человеческих потерь.</p>
+                        </template>
+                    </div>
+                    <div class="col-center"><div class="glass-red-bar"><span class="year-label">19<br>45</span></div></div>
+                    <div class="col-right"><div class="photo-frame"><img src="./img/year/1941.png" alt="1945 год" loading="lazy"></div></div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="content-panel reveal" id="battles">
+        <section class="battles-slider-section">
+            <div class="battles-header">
+                <div class="section-kicker">05 / СРАЖЕНИЯ</div>
+                <h2 class="panel-title">Поворотные сражения</h2>
+                <p class="panel-subtitle">Ключевые рубежи войны. Для каждого события указаны дата и исторический контекст.</p>
+                <div class="battles-nav">
+                    <button class="nav-arrow-small" id="battlePrev" type="button" aria-label="Предыдущее сражение">‹</button>
+                    <button class="nav-arrow-small active" id="battleNext" type="button" aria-label="Следующее сражение">›</button>
+                </div>
+            </div>
+
+            <div class="battles-container">
+                <div class="battles-wrapper" id="battlesWrapper">
+                    <article class="battle-card side" data-index="0">
+                        <img src="./img/bitv/Grodno.png" alt="Оборона Гродно" loading="lazy">
+                        <div class="battle-info-main">
+                            <span class="battle-type">ПРЕДЫСТОРИЯ</span>
+                            <h3>Оборона Гродно</h3>
+                            <p>Событие сентября 1939 года. Оно относится к началу Второй мировой войны и помещено здесь как исторический контекст, а не как сражение Великой Отечественной войны.</p>
+                            <span class="battle-date">20–22 сентября 1939</span>
+                        </div>
+                    </article>
+
+                    <article class="battle-card active" data-index="1">
+                        <img src="./img/bitv/Grodno.png" alt="Сталинградская битва" loading="lazy">
+                        <div class="battle-info-main">
+                            <span class="battle-type">ПЕРЕЛОМ</span>
+                            <h3>Сталинградская битва</h3>
+                            <p>Одно из крупнейших и наиболее кровопролитных сражений войны. Окружение немецкой группировки стало важнейшим стратегическим и психологическим переломом.</p>
+                            <span class="battle-date">17 июля 1942 — 2 февраля 1943</span>
+                        </div>
+                    </article>
+
+                    <article class="battle-card side" data-index="2">
+                        <img src="./img/bitv/Curck.png" alt="Курская битва" loading="lazy">
+                        <div class="battle-info-main">
+                            <span class="battle-type">ПЕРЕЛОМ</span>
+                            <h3>Курская битва</h3>
+                            <p>После победы на Курской дуге стратегическая инициатива окончательно перешла к Красной Армии.</p>
+                            <span class="battle-date">5 июля — 23 августа 1943</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div class="battle-footer-card">
+                <div class="footer-card-text">
+                    <div class="section-kicker">ОТ МОСКВЫ ДО БЕРЛИНА</div>
+                    <h3>Каждый рубеж менял ход войны</h3>
+                    <p>Перед вами — ключевые события, определившие ход войны. Здесь важно не только название битвы, но и люди, решения и цена каждого перелома.</p>
+                </div>
+                <div class="footer-card-img"><img src="./img/bitv/reichstag.png" alt="Знамя над Рейхстагом" loading="lazy"></div>
+            </div>
+        </section>
+    </section>
+
+    <section class="map-section reveal" id="map">
+        <div class="map-heading">
+            <div class="section-kicker dark">06 / МЕСТА</div>
+            <h2 class="title">Места боевой славы</h2>
+            <p>Нажмите на точку, чтобы увидеть историческую справку.</p>
+        </div>
+        <div class="block-wrapper">
+            <div class="content-border">
+                <div class="map-container">
+                    <img src="./img/maps.png" alt="Карта мест боевой славы" class="map-image" loading="lazy">
+                    <button class="pin" style="top:25%;left:16%" data-title="Москва" data-text="Московская битва: первое крупное стратегическое поражение немецких войск на Восточном фронте." aria-label="Москва"><img src="./img/pin.svg" alt=""></button>
+                    <button class="pin" style="top:20%;left:35%" data-title="Брест" data-text="Брестская крепость стала одним из первых символов сопротивления в первые дни Великой Отечественной войны." aria-label="Брест"><img src="./img/pin.svg" alt=""></button>
+                    <button class="pin" style="top:40%;left:33%" data-title="Сталинград" data-text="Сталинградская битва стала одним из важнейших переломов войны." aria-label="Сталинград"><img src="./img/pin.svg" alt=""></button>
+                    <button class="pin" style="top:15%;left:63%" data-title="Курская дуга" data-text="Курская битва закрепила стратегическую инициативу Красной Армии." aria-label="Курская дуга"><img src="./img/pin.svg" alt=""></button>
+                    <button class="pin" style="top:35%;left:80%" data-title="Берлин" data-text="Весной 1945 года бои достигли Берлина. 9 мая стало днём Победы." aria-label="Берлин"><img src="./img/pin.svg" alt=""></button>
+                </div>
+                <div class="info-panel" id="mapInfo">
+                    <span class="map-label">ВЫБРАННАЯ ЛОКАЦИЯ</span>
+                    <h2>Московская битва</h2>
+                    <p>Крупнейшее сражение первого года войны, где был развеян миф о непобедимости вермахта. Здесь наступление было остановлено, а затем противник отброшен от столицы.</p>
+                </div>
+            </div>
+
+            <form class="search-bar" id="mapSearch">
+                <img src="./img/pin.svg" class="icon-geo" alt="">
+                <input id="mapSearchInput" type="search" placeholder="Найти локацию" autocomplete="off">
+                <button class="btn-search" type="submit">Поиск <img src="./img/search-icon.svg" class="icon-zoom" alt=""></button>
+            </form>
+        </div>
+    </section>
+
+    <section class="info-divider reveal" id="days">
+        <div class="divider-content">
+            <div class="divider-number">1418</div>
+            <div class="divider-title">ДНЕЙ: ПУТЬ ПОТЕРЬ И СТОЙКОСТИ</div>
+            <p class="divider-text">Эта дорога — путь через потерю и стойкость, через 1418 дней, которые изменили миллионы судеб. Она ведёт нас не только к Победе, но и к пониманию цены, которая за неё заплачена.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-hero">
+            <div class="footer-hero-inner">
+                <img src="./img/Vector.png" class="footer-flower" alt="">
+                <div class="section-kicker">ФИНАЛ / ПАМЯТЬ</div>
+                <h2 class="footer-title">За каждым именем на этом сайте — судьба человека,<br>который отдал жизнь за мирное небо над нашей головой.</h2>
+                <p class="footer-text">Если у Вас есть материалы или истории о ветеранах вашей семьи — свяжитесь с нами.<br>Давайте сохраним память вместе.</p>
+            </div>
+        </div>
+
+
+        <div class="footer-nav">
+            <div class="footer-nav-content">
+                <div class="footer-logo"><img src="./img/logo.png" alt="Логотип"></div>
+                <div class="footer-menu-block">
+                    <div class="footer-menu-top">
+                        <h3>Навигация по сайту</h3>
+                        <div class="footer-socials">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-menu-bottom">
+                        <nav>
+                            <a href="#top">Главная</a>
+                            <a href="#heroes">Герои</a>
+                            <a href="#chronicle">История</a>
+                            <a href="#battles">Битвы</a>
+                            <a href="#map">Карта</a>
+                        </nav>
+                        <span class="footer-motto">История не заканчивается на этих страницах.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-legal"><a href="#">Политика обработки персональных данных</a></div>
+    </footer>
+</main>
+
+
+<div class="info-modal" id="infoModal" aria-hidden="true">
+    <div class="info-modal-backdrop" data-close-modal></div>
+    <div class="info-modal-box" role="dialog" aria-modal="true" tabindex="-1">
+        <button class="info-modal-close" type="button" data-close-modal aria-label="Закрыть">✕</button>
+        <div class="info-modal-scroll">
+            <div class="info-modal-content" id="infoModalContent"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+(() => {
+    const $ = (selector, scope = document) => scope.querySelector(selector);
+    const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* PRELOADER: только ключевые изображения первого экрана */
+    const preloader = $('#preloader');
+    const progressBar = $('#preloaderProgress');
+    const progressText = $('#preloaderPercent');
+    const KEY_IMAGES = [
+        './img/logo.png',
+        './img/header-bc.png',
+        './img/back-main.png',
+        './img/main-block.png'
+    ];
+
+    function updateProgress(value) {
+        const v = Math.max(0, Math.min(100, Math.round(value)));
+        if (progressBar) progressBar.style.width = v + '%';
+        if (progressText) progressText.textContent = String(v).padStart(2, '0') + '%';
+    }
+
+    function preloadImage(src) {
+        return new Promise(resolve => {
+            const image = new Image();
+            let settled = false;
+            const settle = () => {
+                if (settled) return;
+                settled = true;
+                resolve();
+            };
+            image.onload = settle;
+            image.onerror = settle;
+            image.src = src;
+        });
+    }
+
+    async function startPreloader() {
+        if (!preloader) return;
+        document.body.classList.add('loading');
+        updateProgress(0);
+
+        let completed = 0;
+        const total = KEY_IMAGES.length;
+        const loading = Promise.all(KEY_IMAGES.map(src =>
+            preloadImage(src).then(() => {
+                completed++;
+                updateProgress((completed / total) * 100);
+            })
+        ));
+        const safety = new Promise(resolve => setTimeout(resolve, 8000));
+
+        await Promise.race([loading, safety]);
+        updateProgress(100);
+
+        setTimeout(() => {
+            document.body.classList.remove('loading');
+            document.body.classList.add('site-loaded');
+            preloader.classList.add('hide');
+            window.dispatchEvent(new Event('site:loaded'));
+            preloader.setAttribute('aria-hidden', 'true');
+            setTimeout(() => preloader.remove(), 750);
+        }, reduceMotion ? 80 : 550);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startPreloader, { once: true });
+    } else {
+        startPreloader();
+    }
+
+    /* MOBILE MENU */
+    const burger = $('#burgerToggle');
+    const sidePanel = $('#sidePanel');
+    const closePanel = $('#closePanel');
+
+    function closeMenu() {
+        sidePanel?.classList.remove('active');
+        sidePanel?.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('menu-open');
+    }
+
+    burger?.addEventListener('click', () => {
+        sidePanel?.classList.add('active');
+        sidePanel?.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('menu-open');
+    });
+    closePanel?.addEventListener('click', closeMenu);
+    $$('.side-nav a').forEach(link => link.addEventListener('click', closeMenu));
+
+    /* HERO SLIDER: нативная прокрутка со scroll-snap, стрелки листают по карточке */
+    const heroSection = $('#heroes');
+    const heroViewport = $('.cards-viewport');
+    const heroWrapper = $('.cards-wrapper');
+    const heroCards = $$('.hero-card');
+    const heroPrev = $('.slider-container .prev');
+    const heroNext = $('.slider-container .next');
+    const heroProgress = $('#heroProgress');
+
+    function heroStep() {
+        if (!heroCards.length) return 0;
+        const gap = parseFloat(getComputedStyle(heroWrapper).columnGap) || 0;
+        return heroCards[0].getBoundingClientRect().width + gap;
+    }
+
+    function updateHeroSlider() {
+        if (!heroViewport) return;
+        const max = heroViewport.scrollWidth - heroViewport.clientWidth;
+        const scrollable = max > 2;
+        heroSection?.classList.toggle('is-static', !scrollable);
+        if (heroPrev) heroPrev.disabled = heroViewport.scrollLeft <= 2;
+        if (heroNext) heroNext.disabled = heroViewport.scrollLeft >= max - 2;
+        if (heroProgress) {
+            const ratio = scrollable ? Math.min(1, Math.max(0, heroViewport.scrollLeft / max)) : 1;
+            heroProgress.style.width = `${scrollable ? 20 + ratio * 80 : 100}%`;
+        }
+    }
+
+    function heroScroll(dir, wrap = false) {
+        const max = heroViewport.scrollWidth - heroViewport.clientWidth;
+        const behavior = reduceMotion ? 'auto' : 'smooth';
+        if (wrap && dir > 0 && heroViewport.scrollLeft >= max - 2) {
+            heroViewport.scrollTo({ left: 0, behavior });
+            return;
+        }
+        heroViewport.scrollBy({ left: dir * heroStep(), behavior });
+    }
+
+    heroViewport?.addEventListener('scroll', updateHeroSlider, { passive: true });
+    heroNext?.addEventListener('click', () => heroScroll(1));
+    heroPrev?.addEventListener('click', () => heroScroll(-1));
+    $('.hero-scroll-next')?.addEventListener('click', () => heroScroll(1, true));
+
+    /* BATTLES SLIDER: активная карточка всегда по центру */
+    const battlesWrapper = $('#battlesWrapper');
+    const battlesContainer = $('.battles-container');
+    const battleCards = $$('.battle-card');
+    const battlePrev = $('#battlePrev');
+    const battleNext = $('#battleNext');
+    let battleIndex = Math.min(1, battleCards.length - 1);
+
+    function centerBattle(instant = false) {
+        const card = battleCards[battleIndex];
+        if (!card || !battlesWrapper || !battlesContainer) return;
+        const offset = battlesContainer.clientWidth / 2 - (card.offsetLeft + card.offsetWidth / 2);
+        if (instant) battlesWrapper.style.transition = 'none';
+        battlesWrapper.style.transform = `translate3d(${offset}px,0,0)`;
+        if (instant) {
+            void battlesWrapper.offsetWidth;
+            battlesWrapper.style.transition = '';
+        }
+    }
+
+    function updateBattleSlider(instant = false) {
+        battleCards.forEach((card, index) => {
+            card.classList.toggle('active', index === battleIndex);
+            card.classList.toggle('side', index !== battleIndex);
+        });
+
+        if (battlePrev) {
+            battlePrev.disabled = battleIndex === 0;
+            battlePrev.classList.toggle('active', battleIndex !== 0);
+        }
+        if (battleNext) {
+            battleNext.disabled = battleIndex === battleCards.length - 1;
+            battleNext.classList.toggle('active', battleIndex !== battleCards.length - 1);
+        }
+        centerBattle(instant);
+    }
+
+    function goBattle(index) {
+        const next = Math.max(0, Math.min(battleCards.length - 1, index));
+        if (next === battleIndex) return;
+        battleIndex = next;
+        updateBattleSlider();
+    }
+
+    battleNext?.addEventListener('click', () => goBattle(battleIndex + 1));
+    battlePrev?.addEventListener('click', () => goBattle(battleIndex - 1));
+    battleCards.forEach((card, index) => card.addEventListener('click', () => goBattle(index)));
+
+    /* свайп по сражениям на тач-экранах */
+    let swipeX = null;
+    battlesContainer?.addEventListener('touchstart', e => { swipeX = e.touches[0].clientX; }, { passive: true });
+    battlesContainer?.addEventListener('touchend', e => {
+        if (swipeX === null) return;
+        const dx = e.changedTouches[0].clientX - swipeX;
+        swipeX = null;
+        if (Math.abs(dx) > 45) goBattle(battleIndex + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    /* MAP */
+    const pins = $$('.pin');
+    const mapTitle = $('#mapInfo h2');
+    const mapText = $('#mapInfo p');
+    const searchInput = $('#mapSearchInput');
+
+    pins.forEach(pin => {
+        pin.addEventListener('click', () => {
+            pins.forEach(p => p.classList.remove('selected'));
+            pin.classList.add('selected');
+            if (mapTitle) mapTitle.textContent = pin.dataset.title || '';
+            if (mapText) mapText.textContent = pin.dataset.text || '';
+        });
+    });
+
+    $('#mapSearch')?.addEventListener('submit', event => {
+        event.preventDefault();
+        const query = (searchInput?.value || '').trim().toLowerCase();
+        if (!query) return;
+
+        const match = pins.find(pin => (pin.dataset.title || '').toLowerCase().includes(query));
+        if (match) {
+            match.click();
+            match.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        } else if (searchInput) {
+            searchInput.classList.add('search-error');
+            setTimeout(() => searchInput.classList.remove('search-error'), 600);
+        }
+    });
+
+    /* SCROLL REVEAL: анимация работает и вниз, и обратно вверх */
+    const revealElements = $$('.reveal');
+    let lastScrollY = window.scrollY;
+    let scrollDirection = 'down';
+
+    window.addEventListener('scroll', () => {
+        const currentY = window.scrollY;
+        scrollDirection = currentY < lastScrollY ? 'up' : 'down';
+        lastScrollY = currentY;
+    }, { passive: true });
+
+    function replayMotion(element, className, duration = 1100) {
+        element.classList.remove(className);
+        void element.offsetWidth;
+        element.classList.add(className);
+        window.setTimeout(() => element.classList.remove(className), duration);
+    }
+
+    if (reduceMotion) {
+        revealElements.forEach(el => el.classList.add('is-visible'));
+    } else {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    if (scrollDirection === 'up') {
+                        replayMotion(entry.target, 'return-reveal', 1150);
+                    }
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        revealElements.forEach(el => observer.observe(el));
+    }
+
+    /* Возвращение вверх: Дорога Памяти заезжает обратно */
+    const memorial = $('.memorial-container');
+
+    const replayMemorial = () => {
+        if (!memorial || reduceMotion) return;
+        replayMotion(memorial, 'road-return', 1250);
+    };
+
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+        const returnObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting || scrollDirection !== 'up') return;
+                if (entry.target === memorial) replayMemorial();
+            });
+        }, { threshold: 0.18 });
+        if (memorial) returnObserver.observe(memorial);
+    }
+
+    /* MODAL: краткая справка о герое или годе поверх страницы */
+    const modal = $('#infoModal');
+    const modalBox = $('.info-modal-box', modal);
+    const modalContent = $('#infoModalContent');
+    let lastTrigger = null;
+
+    function openModal(trigger) {
+        const tpl = trigger.closest('.hero-card, .year-card')?.querySelector('template.modal-tpl');
+        if (!tpl || !modal) return;
+        lastTrigger = trigger;
+        modalContent.replaceChildren(tpl.content.cloneNode(true));
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        const title = $('.modal-title', modalContent);
+        if (title) {
+            title.id = 'infoModalTitle';
+            modalBox.setAttribute('aria-labelledby', 'infoModalTitle');
+        }
+        modalBox.classList.toggle('is-wide', !!$('.modal-figure', modalContent));
+        $('.info-modal-scroll', modal).scrollTop = 0;
+        const body = $('.modal-body', modalContent);
+        if (body) body.scrollTop = 0;
+        modalBox.focus({ preventScroll: true });
+    }
+
+    function closeModal() {
+        if (!modal.classList.contains('is-open')) return;
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        lastTrigger?.focus({ preventScroll: true });
+    }
+
+    $$('[data-open-modal]').forEach(btn => btn.addEventListener('click', () => openModal(btn)));
+    $$('[data-close-modal]', modal).forEach(el => el.addEventListener('click', closeModal));
+
+    document.addEventListener('keydown', event => {
+        if (!modal.classList.contains('is-open')) return;
+        if (event.key === 'Escape') {
+            closeModal();
+        } else if (event.key === 'Tab') {
+            const focusable = $$('button, a[href]', modalBox);
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && (document.activeElement === first || document.activeElement === modalBox)) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        }
+    });
+
+    /* HERO: текст печатается по буквам один раз; клик, клавиша или прокрутка пропускают анимацию */
+    const heroBanner = $('.hero-section');
+    const heroContent = $('.hero-content');
+    const typeGroups = [];
+    const heroRule = $('.hero-rule');
+    const heroAfter = $('.hero-after');
+    const heroHint = $('.hero-scroll');
+    let typingRun = 0;
+    let heroPlayed = false;
+
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    function splitForTyping(el) {
+        const chars = [];
+        const holder = document.createElement('div');
+        const walk = (node, parent) => {
+            node.childNodes.forEach(child => {
+                if (child.nodeType === 3) {
+                    child.textContent.split(/(\s+)/).forEach(part => {
+                        if (!part) return;
+                        if (/^\s+$/.test(part)) {
+                            parent.appendChild(document.createTextNode(' '));
+                            return;
+                        }
+                        const word = document.createElement('span');
+                        word.className = 'tw-word';
+                        [...part].forEach(letter => {
+                            const ch = document.createElement('span');
+                            ch.className = 'tw-char';
+                            ch.textContent = letter;
+                            word.appendChild(ch);
+                            chars.push(ch);
+                        });
+                        parent.appendChild(word);
+                    });
+                } else if (child.nodeType === 1) {
+                    const clone = child.cloneNode(false);
+                    parent.appendChild(clone);
+                    walk(child, clone);
+                }
+            });
+        };
+        walk(el, holder);
+        el.setAttribute('aria-label', el.textContent.trim().replace(/\s+/g, ' '));
+        el.replaceChildren(...holder.childNodes);
+        return chars;
+    }
+
+    function revealHeroExtras() {
+        heroAfter?.classList.remove('is-hidden');
+        heroAfter?.classList.add('is-in');
+        heroHint?.classList.remove('is-hidden');
+    }
+
+    function showHeroInstantly() {
+        typingRun++;
+        heroPlayed = true;
+        typeGroups.forEach(group => group.chars.forEach(ch => {
+            ch.classList.add('on');
+            ch.classList.remove('is-cursor');
+        }));
+        heroRule?.classList.remove('is-hidden');
+        revealHeroExtras();
+    }
+
+    let firstTyping = true;
+
+    async function playHeroTyping() {
+        const run = ++typingRun;
+        heroPlayed = false;
+        heroRule?.classList.add('is-hidden');
+        heroAfter?.classList.add('is-hidden');
+        heroAfter?.classList.remove('is-in');
+        heroHint?.classList.add('is-hidden');
+        typeGroups.forEach(group => group.chars.forEach(ch => ch.classList.remove('on', 'is-cursor')));
+
+        await sleep(firstTyping ? 450 : 300);
+        firstTyping = false;
+        let cursor = null;
+
+        for (const group of typeGroups) {
+            for (const ch of group.chars) {
+                if (run !== typingRun) return;
+                ch.classList.add('on', 'is-cursor');
+                cursor?.classList.remove('is-cursor');
+                cursor = ch;
+                const pause = /[.,:;—]/.test(ch.textContent) ? group.pause : 0;
+                await sleep(group.speed * (0.7 + Math.random() * 0.6) + pause);
+            }
+            if (group.rule) heroRule?.classList.remove('is-hidden');
+            await sleep(group.gap);
+        }
+
+        if (run !== typingRun) return;
+        heroPlayed = true;
+        revealHeroExtras();
+        await sleep(1600);
+        if (run === typingRun) cursor?.classList.remove('is-cursor');
+    }
+
+    if (!reduceMotion && heroContent) {
+        const speeds = [
+            { speed: 26, pause: 120, gap: 160 },
+            { speed: 62, pause: 220, gap: 220, rule: true },
+            { speed: 17, pause: 170, gap: 120 }
+        ];
+        $$('[data-typewriter]', heroContent).forEach((el, i) => {
+            typeGroups.push({ chars: splitForTyping(el), ...speeds[i] });
+        });
+        heroRule?.classList.add('is-hidden');
+        heroAfter?.classList.add('is-hidden');
+        heroHint?.classList.add('is-hidden');
+
+        if (preloader) window.addEventListener('site:loaded', playHeroTyping, { once: true });
+        else playHeroTyping();
+
+        /* как раньше: анимация проигрывается заново, когда возвращаешься к hero */
+        const skipTyping = () => { if (!heroPlayed) showHeroInstantly(); };
+        heroBanner?.addEventListener('pointerdown', skipTyping);
+
+        let heroLeftView = false;
+        if ('IntersectionObserver' in window && heroBanner) {
+            new IntersectionObserver(entries => {
+                const entry = entries[0];
+                if (!entry.isIntersecting) heroLeftView = true;
+                else if (entry.intersectionRatio >= 0.6 && heroLeftView) {
+                    heroLeftView = false;
+                    playHeroTyping();
+                }
+            }, { threshold: [0, 0.6] }).observe(heroBanner);
+        }
+    }
+
+    /* HERO: подсказка «листайте» исчезает после первой прокрутки, мягкий параллакс и затемнение */
+    let heroTick = false;
+
+    function updateHeroScroll() {
+        heroTick = false;
+        const y = window.scrollY;
+        heroHint?.classList.toggle('is-gone', y > 40);
+        if (reduceMotion || !heroBanner) return;
+        const top = heroBanner.getBoundingClientRect().top + y;
+        const h = heroBanner.offsetHeight || 1;
+        const p = Math.min(1, Math.max(0, y / (top + h * 0.8)));
+        heroBanner.style.setProperty('--hero-bg-shift', `${(p * h * 0.1).toFixed(1)}px`);
+        heroBanner.style.setProperty('--hero-content-shift', `${(-p * 28).toFixed(1)}px`);
+        heroBanner.style.setProperty('--hero-fade', Math.max(0, 1 - p * 1.15).toFixed(3));
+        heroBanner.style.setProperty('--hero-dim', (p * 0.6).toFixed(3));
+    }
+
+    window.addEventListener('scroll', () => {
+        if (heroTick) return;
+        heroTick = true;
+        requestAnimationFrame(updateHeroScroll);
+    }, { passive: true });
+    updateHeroScroll();
+
+    /* ACTIVE NAV */
+    const navLinks = $$('.nav-link');
+    const sections = ['heroes', 'history', 'battles', 'map', 'chronicle']
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+    if ('IntersectionObserver' in window) {
+        const navObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id));
+                }
+            });
+        }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+        sections.forEach(section => navObserver.observe(section));
+    }
+
+    /* HEADER */
+    const header = $('.main-header');
+    window.addEventListener('scroll', () => {
+        header?.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    updateHeroSlider();
+    updateBattleSlider(true);
+    window.addEventListener('resize', () => {
+        updateHeroSlider();
+        centerBattle(true);
+    }, { passive: true });
+    window.addEventListener('load', () => {
+        updateHeroSlider();
+        centerBattle(true);
+    });
+})();
+</script>
+</body>
+</html>
