@@ -13,6 +13,7 @@
     <script src="components/header.js"></script>
     <script src="components/footer.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
 </head>
 <body>
 
@@ -398,29 +399,34 @@
         <div class="map-heading">
             <div class="section-kicker dark">06 / МЕСТА</div>
             <h2 class="title">Места боевой славы</h2>
-            <p>Нажмите на точку, чтобы увидеть историческую справку.</p>
+            <p>Перемещайте карту, нажимайте на точки или найдите место через поиск.</p>
         </div>
         <div class="block-wrapper">
             <div class="content-border">
                 <div class="map-container">
-                    <img src="./img/maps.png" alt="Карта мест боевой славы" class="map-image" loading="lazy">
-                    <button class="pin" style="top:25%;left:16%" data-title="Москва" data-text="Московская битва: первое крупное стратегическое поражение немецких войск на Восточном фронте." aria-label="Москва"><img src="./img/pin.svg" alt=""></button>
-                    <button class="pin" style="top:20%;left:35%" data-title="Брест" data-text="Брестская крепость стала одним из первых символов сопротивления в первые дни Великой Отечественной войны." aria-label="Брест"><img src="./img/pin.svg" alt=""></button>
-                    <button class="pin" style="top:40%;left:33%" data-title="Сталинград" data-text="Сталинградская битва стала одним из важнейших переломов войны." aria-label="Сталинград"><img src="./img/pin.svg" alt=""></button>
-                    <button class="pin" style="top:15%;left:63%" data-title="Курская дуга" data-text="Курская битва закрепила стратегическую инициативу Красной Армии." aria-label="Курская дуга"><img src="./img/pin.svg" alt=""></button>
-                    <button class="pin" style="top:35%;left:80%" data-title="Берлин" data-text="Весной 1945 года бои достигли Берлина. 9 мая стало днём Победы." aria-label="Берлин"><img src="./img/pin.svg" alt=""></button>
+                    <div id="battleMap" role="region" aria-label="Интерактивная карта мест боевой славы"></div>
+                    <div class="map-hint" id="mapHint" aria-hidden="true">
+                        <span class="hint-mouse">Колесо мыши включается после клика по карте</span>
+                        <span class="hint-touch">Двигайте и масштабируйте карту двумя пальцами</span>
+                    </div>
                 </div>
-                <div class="info-panel" id="mapInfo">
-                    <span class="map-label">ВЫБРАННАЯ ЛОКАЦИЯ</span>
-                    <h2>Московская битва</h2>
-                    <p>Крупнейшее сражение первого года войны, где был развеян миф о непобедимости вермахта. Здесь наступление было остановлено, а затем противник отброшен от столицы.</p>
+                <div class="info-panel" id="mapInfo" aria-live="polite">
+                    <div class="info-panel-text">
+                        <span class="map-label" id="mapKind">Места боевой славы</span>
+                        <h2 id="mapTitle">Выберите место</h2>
+                        <p class="map-date" id="mapDate" hidden></p>
+                        <p id="mapText">Нажмите на точку на карте или найдите место через поиск ниже.</p>
+                    </div>
+                    <figure class="info-panel-photo" id="mapPhoto" hidden><img alt="" loading="lazy"></figure>
                 </div>
             </div>
 
-            <form class="search-bar" id="mapSearch">
+            <form class="search-bar" id="mapSearch" role="search" autocomplete="off">
                 <img src="./img/pin.svg" class="icon-geo" alt="">
-                <input id="mapSearchInput" type="search" placeholder="Найти локацию" autocomplete="off">
+                <input id="mapSearchInput" type="search" placeholder="Найти место или битву" autocomplete="off"
+                       role="combobox" aria-label="Поиск места" aria-expanded="false" aria-controls="mapSuggest" aria-autocomplete="list">
                 <button class="btn-search" type="submit">Поиск <img src="./img/search-icon.svg" class="icon-zoom" alt=""></button>
+                <ul class="search-suggest" id="mapSuggest" role="listbox" aria-label="Подсказки" hidden></ul>
             </form>
         </div>
     </section>
@@ -447,6 +453,8 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="data/places.js"></script>
 <script>
 (() => {
     const $ = (selector, scope = document) => scope.querySelector(selector);
@@ -622,34 +630,210 @@
         if (Math.abs(dx) > 45) goBattle(battleIndex + (dx < 0 ? 1 : -1));
     }, { passive: true });
 
-    /* MAP */
-    const pins = $$('.pin');
-    const mapTitle = $('#mapInfo h2');
-    const mapText = $('#mapInfo p');
+    /* MAP: Leaflet + список мест из data/places.js */
+    const places = Array.isArray(window.PLACES) ? window.PLACES : [];
+    const mapEl = $('#battleMap');
     const searchInput = $('#mapSearchInput');
+    const suggestEl = $('#mapSuggest');
+    const mapHint = $('#mapHint');
+    const panel = {
+        root: $('#mapInfo'),
+        kind: $('#mapKind'),
+        title: $('#mapTitle'),
+        date: $('#mapDate'),
+        text: $('#mapText'),
+        photo: $('#mapPhoto')
+    };
+    const markers = new Map();
+    let map = null;
 
-    pins.forEach(pin => {
-        pin.addEventListener('click', () => {
-            pins.forEach(p => p.classList.remove('selected'));
-            pin.classList.add('selected');
-            if (mapTitle) mapTitle.textContent = pin.dataset.title || '';
-            if (mapText) mapText.textContent = pin.dataset.text || '';
+    /* Подложка карты. Чтобы сменить провайдера, поменяйте только эти две строки. */
+    const TILE_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';
+    const TILE_ATTRIBUTION = 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, TomTom, USGS, and others';
+
+    function showPlace(place) {
+        panel.kind.textContent = place.kind || 'Выбранная локация';
+        panel.title.textContent = place.title;
+        panel.text.textContent = place.text || '';
+        panel.date.textContent = place.date || '';
+        panel.date.hidden = !place.date;
+        const img = panel.photo.querySelector('img');
+        panel.photo.hidden = !place.image;
+        panel.root.classList.toggle('has-photo', !!place.image);
+        if (place.image) {
+            img.src = place.image;
+            img.alt = place.title;
+        }
+    }
+
+    function selectPlace(place, { fly = true } = {}) {
+        markers.forEach((marker, id) => {
+            marker.getElement()?.classList.toggle('is-selected', id === place.id);
+            marker.setZIndexOffset(id === place.id ? 1000 : 0);
         });
+        showPlace(place);
+        if (!map) return;
+        const target = [place.lat, place.lng];
+        if (fly) {
+            const zoom = Math.max(map.getZoom(), 6);
+            if (reduceMotion) map.setView(target, zoom);
+            else map.flyTo(target, zoom, { duration: 1.1 });
+        } else {
+            map.panTo(target, { animate: !reduceMotion });
+        }
+    }
+
+    if (mapEl && window.L && places.length) {
+        map = L.map(mapEl, {
+            minZoom: 3,
+            maxZoom: 10,
+            scrollWheelZoom: false,
+            dragging: !L.Browser.mobile,
+            maxBounds: [[25, -15], [75, 85]],
+            maxBoundsViscosity: 0.7
+        });
+
+        L.tileLayer(TILE_URL, {
+            maxZoom: 10,
+            attribution: TILE_ATTRIBUTION
+        }).addTo(map);
+
+        map.fitBounds(L.latLngBounds(places.map(p => [p.lat, p.lng])).pad(0.15));
+
+        places.forEach(place => {
+            const icon = L.divIcon({
+                className: 'map-marker',
+                html: '<span class="mpin"><img src="./img/pin.svg" alt=""></span>',
+                iconSize: [0, 0]
+            });
+            const marker = L.marker([place.lat, place.lng], { icon, riseOnHover: true }).addTo(map);
+            marker.bindTooltip(place.title, { direction: 'top', offset: [0, -38], className: 'map-tip' });
+            marker.getElement()?.setAttribute('aria-label', place.title);
+            marker.on('click', () => selectPlace(place, { fly: false }));
+            markers.set(place.id, marker);
+        });
+
+        /* колесо мыши зумит карту только после клика, чтобы не перехватывать прокрутку страницы */
+        map.on('click', () => map.scrollWheelZoom.enable());
+        map.on('mouseout', () => map.scrollWheelZoom.disable());
+        map.once('click zoomstart dragstart', () => mapHint?.classList.add('is-gone'));
+        window.addEventListener('load', () => map.invalidateSize());
+    } else if (mapEl) {
+        mapEl.innerHTML = '<p class="map-fallback">Карта не загрузилась. Найдите место через поиск ниже.</p>';
+    }
+
+    /* ПОИСК с подсказками */
+    const normalize = s => (s || '').toLowerCase().replace(/ё/g, 'е').replace(/[«»"'.,]/g, '').replace(/\s+/g, ' ').trim();
+
+    function findPlaces(query) {
+        const q = normalize(query);
+        if (!q) return places.slice(0, 6);
+        return places
+            .map(place => {
+                const score = Math.min(...[place.title, ...(place.aliases || [])].map(name => {
+                    const n = normalize(name);
+                    if (n.startsWith(q)) return 0;
+                    if (n.split(' ').some(word => word.startsWith(q))) return 1;
+                    return n.includes(q) ? 2 : Infinity;
+                }));
+                return { place, score };
+            })
+            .filter(item => item.score !== Infinity)
+            .sort((a, b) => a.score - b.score || a.place.title.localeCompare(b.place.title, 'ru'))
+            .slice(0, 6)
+            .map(item => item.place);
+    }
+
+    let suggestions = [];
+    let activeIndex = -1;
+
+    function setActive(index) {
+        activeIndex = index;
+        $$('li[role="option"]', suggestEl).forEach((li, i) => {
+            const on = i === index;
+            li.setAttribute('aria-selected', on ? 'true' : 'false');
+            if (on) {
+                searchInput.setAttribute('aria-activedescendant', li.id);
+                li.scrollIntoView({ block: 'nearest' });
+            }
+        });
+        if (index < 0) searchInput.removeAttribute('aria-activedescendant');
+    }
+
+    function closeSuggest() {
+        suggestEl.hidden = true;
+        searchInput.setAttribute('aria-expanded', 'false');
+        searchInput.removeAttribute('aria-activedescendant');
+        activeIndex = -1;
+    }
+
+    function renderSuggest() {
+        suggestions = findPlaces(searchInput.value);
+        suggestEl.replaceChildren();
+        if (!suggestions.length) {
+            const li = document.createElement('li');
+            li.className = 'is-empty';
+            li.textContent = 'Ничего не найдено';
+            suggestEl.appendChild(li);
+        } else {
+            suggestions.forEach((place, i) => {
+                const li = document.createElement('li');
+                li.id = `mapSuggest-${i}`;
+                li.setAttribute('role', 'option');
+                li.setAttribute('aria-selected', 'false');
+                const name = document.createElement('span');
+                name.className = 'sg-title';
+                name.textContent = place.title;
+                const meta = document.createElement('span');
+                meta.className = 'sg-meta';
+                meta.textContent = place.kind || '';
+                li.append(name, meta);
+                li.addEventListener('click', () => chooseSuggestion(place));
+                suggestEl.appendChild(li);
+            });
+        }
+        suggestEl.hidden = false;
+        searchInput.setAttribute('aria-expanded', 'true');
+        activeIndex = -1;
+        searchInput.removeAttribute('aria-activedescendant');
+    }
+
+    function chooseSuggestion(place) {
+        searchInput.value = place.title;
+        closeSuggest();
+        selectPlace(place);
+        searchInput.blur();
+    }
+
+    function searchFail() {
+        searchInput.classList.add('search-error');
+        setTimeout(() => searchInput.classList.remove('search-error'), 600);
+    }
+
+    searchInput?.addEventListener('input', renderSuggest);
+    searchInput?.addEventListener('focus', renderSuggest);
+    searchInput?.addEventListener('blur', () => setTimeout(closeSuggest, 120));
+    suggestEl?.addEventListener('mousedown', event => event.preventDefault());
+
+    searchInput?.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeSuggest();
+        } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            if (suggestEl.hidden) renderSuggest();
+            if (!suggestions.length) return;
+            const step = event.key === 'ArrowDown' ? 1 : -1;
+            setActive((activeIndex + step + suggestions.length) % suggestions.length);
+        }
     });
 
     $('#mapSearch')?.addEventListener('submit', event => {
         event.preventDefault();
-        const query = (searchInput?.value || '').trim().toLowerCase();
-        if (!query) return;
-
-        const match = pins.find(pin => (pin.dataset.title || '').toLowerCase().includes(query));
-        if (match) {
-            match.click();
-            match.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-        } else if (searchInput) {
-            searchInput.classList.add('search-error');
-            setTimeout(() => searchInput.classList.remove('search-error'), 600);
-        }
+        if (!searchInput.value.trim()) return;
+        const list = findPlaces(searchInput.value);
+        const place = activeIndex >= 0 ? suggestions[activeIndex] : list[0];
+        if (place) chooseSuggestion(place);
+        else searchFail();
     });
 
     /* SCROLL REVEAL: анимация работает и вниз, и обратно вверх */

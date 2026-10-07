@@ -1087,6 +1087,8 @@ a {
 }
 
 .map-section {
+    position: relative;
+    z-index: 3;
     margin-top: 100px;
     color: #111;
 }
@@ -1128,42 +1130,25 @@ a {
 
 .map-container {
     position: relative;
-    line-height: 0;
-    background: #eee;
-}
-
-.map-image {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.pin {
-    position: absolute;
-    width: 32px;
-    border: 0;
-    background: transparent;
-    transform: translate(-50%,-100%);
-    transition: transform .25s ease, filter .25s ease;
-}
-
-.pin img {
-    width: 100%;
-}
-
-.pin:hover,
-.pin.selected {
-    transform: translate(-50%,-110%) scale(1.22);
-    filter: drop-shadow(0 0 9px rgba(200,0,0,.8));
+    background: #e9e4dc;
 }
 
 .info-panel {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: center;
     background: #dfdbd7;
     padding: 35px 55px;
     border-top: 1px solid #aaa;
 }
 
+.info-panel.has-photo {
+    grid-template-columns: 1fr minmax(180px, 240px);
+}
+
 .map-label {
+    text-transform: uppercase;
     font-size: 10px;
     letter-spacing: .2em;
     color: #777;
@@ -1182,6 +1167,8 @@ a {
 }
 
 .search-bar {
+    position: relative;
+    z-index: 5;
     margin: 28px auto 0;
     max-width: 760px;
     display: flex;
@@ -1647,32 +1634,6 @@ a {
     color: #bcbcbc;
 }
 
-/* Точки карты читаются лучше */
-
-.map-section .pin {
-    filter: drop-shadow(0 5px 9px rgba(0,0,0,.35));
-}
-
-.map-section .pin::after {
-    content: "";
-    position: absolute;
-    width: 28px;
-    height: 28px;
-    left: 50%;
-    top: 52%;
-    transform: translate(-50%,-50%);
-    border: 1px solid rgba(180,0,0,.55);
-    border-radius: 50%;
-    animation: pinPulse 2.8s ease-out infinite;
-    pointer-events: none;
-}
-
-.map-section .pin.selected::after {
-    width: 42px;
-    height: 42px;
-    border-color: rgba(210,0,0,.8);
-}
-
 /* Кнопки годов */
 
 .year-actions {
@@ -1865,8 +1826,7 @@ body.loading {
     .info-divider .divider-content::after,
     .hero-section::before,
     .hero-section::after,
-    .preloader-years,
-    .map-section .pin::after {
+    .preloader-years {
         animation: none !important;
     }
     .year-more-btn {
@@ -2344,5 +2304,197 @@ body.site-loaded .hero-mark {
         opacity: .9;
         transform: none;
         transition: none;
+    }
+}
+
+
+/* ===== Интерактивная карта мест боевой славы ===== */
+
+#battleMap {
+    height: clamp(420px, 62vh, 640px);
+    z-index: 0;
+    background: #e9e4dc;
+    font-family: inherit;
+}
+
+/* современная карта в «архивных» тонах */
+#battleMap .leaflet-tile-pane {
+    filter: sepia(.55) saturate(.75) contrast(.92) brightness(.98);
+}
+
+.map-marker {
+    background: none;
+    border: 0;
+}
+
+.mpin {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 32px;
+    transform: translate(-50%, -100%);
+    transform-origin: 50% 100%;
+    transition: transform .25s ease, filter .25s ease;
+    filter: drop-shadow(0 5px 9px rgba(0,0,0,.35));
+}
+
+.mpin img {
+    display: block;
+    width: 100%;
+    max-width: none;
+}
+
+.map-marker:hover .mpin,
+.map-marker:focus-visible .mpin,
+.map-marker.is-selected .mpin {
+    transform: translate(-50%, -100%) scale(1.22);
+    filter: drop-shadow(0 0 9px rgba(200,0,0,.8));
+}
+
+.map-marker:focus-visible {
+    outline: none;
+}
+
+.map-tip.leaflet-tooltip {
+    border: 0;
+    border-radius: 10px;
+    padding: 6px 12px;
+    background: #111;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(0,0,0,.35);
+}
+
+.map-tip.leaflet-tooltip-top::before {
+    border-top-color: #111;
+}
+
+.map-hint {
+    position: absolute;
+    left: 14px;
+    bottom: 26px;
+    z-index: 500;
+    max-width: calc(100% - 28px);
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: rgba(17,17,17,.72);
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.4;
+    pointer-events: none;
+    transition: opacity .4s ease;
+}
+
+.map-hint .hint-touch {
+    display: none;
+}
+
+@media (hover: none) {
+    .map-hint .hint-mouse { display: none; }
+    .map-hint .hint-touch { display: inline; }
+}
+
+.map-hint.is-gone {
+    opacity: 0;
+}
+
+.map-fallback {
+    padding: 80px 24px;
+    text-align: center;
+    color: #555;
+}
+
+.info-panel .map-date {
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red);
+}
+
+.info-panel-photo {
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+.info-panel-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* подсказки поиска */
+
+.search-suggest {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 10px);
+    z-index: 1200;
+    list-style: none;
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 18px 40px rgba(0,0,0,.2);
+}
+
+.search-suggest[hidden] {
+    display: none;
+}
+
+.search-suggest li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 11px 16px;
+    border-radius: 16px;
+    color: #222;
+    line-height: 1.3;
+    cursor: pointer;
+}
+
+.search-suggest li:hover,
+.search-suggest li[aria-selected="true"] {
+    background: #f3ecea;
+}
+
+.search-suggest li.is-empty {
+    color: #777;
+    cursor: default;
+}
+
+.search-suggest li.is-empty:hover {
+    background: none;
+}
+
+.sg-title {
+    font-weight: 600;
+}
+
+.sg-meta {
+    flex: none;
+    font-size: 12px;
+    color: #777;
+}
+
+@media (max-width: 768px) {
+    #battleMap {
+        height: 380px;
+    }
+
+    .info-panel.has-photo {
+        grid-template-columns: 1fr;
+    }
+
+    .info-panel-photo {
+        max-width: 320px;
     }
 }
