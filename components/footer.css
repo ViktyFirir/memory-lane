@@ -1,0 +1,166 @@
+/* ============ FOOTER (components/footer.js) ============
+   Нужны переменные и сброс из style.css — подключайте footer.css ПОСЛЕ него. */
+
+.footer {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    margin-top: 30px;
+    background: #000;
+    overflow: hidden;
+}
+
+.footer-hero {
+    background: linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.72)), url('../img/footer.png') center/cover;
+    padding: 90px 8% 90px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.footer-hero-inner {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.footer-flower {
+    width: 45px;
+    margin-bottom: 30px;
+}
+
+.footer-title {
+    font-size: clamp(25px,3vw,42px);
+    line-height: 1.25;
+    margin: 14px 0 30px;
+}
+
+.footer-text {
+    font-size: 17px;
+    color: #ccc;
+    line-height: 1.7;
+}
+
+.footer-nav {
+    background: #fff;
+    color: #111;
+    padding: 90px 8% 35px;
+}
+
+.footer-nav-content {
+    display: flex;
+    gap: 70px;
+    align-items: center;
+}
+
+.footer-logo img {
+    width: 80px;
+}
+
+.footer-menu-block {
+    flex: 1;
+}
+
+.footer-menu-top,
+.footer-menu-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.footer-menu-top {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.footer-menu-top h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 18px;
+}
+
+.footer-socials a {
+    color: #333;
+    text-decoration: none;
+}
+
+.footer-menu-bottom {
+    padding-top: 22px;
+}
+
+.footer-menu-bottom nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-menu-bottom nav a {
+    text-decoration: none;
+    color: #444;
+    font-size: 14px;
+}
+
+.footer-menu-bottom nav a:hover {
+    color: var(--red);
+}
+
+.footer-motto {
+    color: #777;
+    font-size: 12px;
+    text-align: right;
+}
+
+.footer-legal {
+    background: #9e0000;
+    padding: 12px 8%;
+    text-align: center;
+}
+
+.footer-legal a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+@media (max-width: 768px) {
+    .footer-hero {
+        padding: 65px 7% 65px;
+        margin-bottom: 0;
+    }
+
+    .footer-title br,
+    .footer-text br {
+        display: none;
+    }
+
+    .footer-nav {
+        padding: 65px 6% 30px;
+    }
+
+    .footer-nav-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .footer-menu-top,
+    .footer-menu-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-menu-bottom nav {
+        justify-content: center;
+    }
+
+    .footer-motto {
+        text-align: center;
+    }
+}
+
+site-footer {
+    display: block;
+}

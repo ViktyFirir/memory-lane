@@ -37,10 +37,6 @@ body {
     background-attachment: fixed;
 }
 
-body.menu-open {
-    overflow: hidden;
-}
-
 img {
     max-width: 100%;
 }
@@ -113,98 +109,6 @@ a {
     font-size: 12px;
     letter-spacing: .16em;
     color: #777;
-}
-
-.main-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 5000;
-    background: url('./img/header-bc.png') center/cover;
-    border-bottom: 1px solid rgba(255,255,255,.1);
-    border-radius: 0 0 30px 30px;
-    transition: background .35s ease, box-shadow .35s ease, transform .35s ease;
-}
-
-.main-header.scrolled {
-    background-color: rgba(7,7,7,.92);
-    box-shadow: 0 12px 35px rgba(0,0,0,.3);
-}
-
-.navbar {
-    min-height: 94px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 58px;
-    padding: 10px 24px;
-}
-
-.nav-group {
-    display: flex;
-    gap: 16px;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #171717;
-    background: linear-gradient(90deg,#fff,#d8d8d8,#fff);
-    padding: 8px 28px;
-    border-radius: 34px;
-    font-size: 16px;
-    font-weight: 500;
-    transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
-}
-
-.nav-link:hover,
-.nav-link.active {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,.22);
-}
-
-.logo-container {
-    text-decoration: none;
-}
-
-.logo-circle {
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    border: 2px solid var(--red-bright);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,.72);
-    box-shadow: 0 0 18px rgba(163,0,0,.3);
-}
-
-.logo-circle img {
-    height: 68px;
-    width: auto;
-}
-
-.burger-menu {
-    display: none;
-    border: 0;
-    background: rgba(0,0,0,.75);
-    width: 50px;
-    height: 50px;
-    border-radius: 15px;
-    padding: 11px;
-}
-
-.burger-menu span {
-    display: block;
-    width: 28px;
-    height: 3px;
-    margin: 5px auto;
-    background: #fff;
-    border-radius: 4px;
-}
-
-.side-panel {
-    display: none;
 }
 
 .main-content {
@@ -284,6 +188,7 @@ a {
 }
 
 /* печатающийся текст */
+
 .tw-word {
     display: inline-block;
     white-space: nowrap;
@@ -308,7 +213,6 @@ a {
     background: var(--accent);
     animation: caretBlink .8s steps(1) infinite;
 }
-
 
 .hero-content p {
     width: min(760px, 100%);
@@ -1036,7 +940,7 @@ a {
     filter: grayscale(0);
     transform: scale(1);
     z-index: 10;
-    cursor: default;
+    cursor: pointer;
     box-shadow: 0 20px 50px rgba(0,0,0,.6);
 }
 
@@ -1087,12 +991,61 @@ a {
     color: #555;
 }
 
-.battle-date {
-    display: block;
+.battle-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
     margin-top: 14px;
+}
+
+.battle-date {
     text-align: right;
     font-weight: 700;
     font-size: 13px;
+}
+
+.battle-link {
+    position: absolute;
+    inset: 0;
+    z-index: 15;
+    border-radius: 22px;
+}
+
+.battle-card.side .battle-link {
+    pointer-events: none;
+}
+
+.battle-more {
+    color: var(--red);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .04em;
+    text-decoration: none;
+    transition: color .3s ease;
+}
+
+.battle-more::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 23px;
+}
+
+.battle-more span {
+    display: inline-block;
+    transition: transform .3s ease;
+}
+
+.battle-card.active:hover .battle-more,
+.battle-more:focus-visible {
+    color: var(--red-bright);
+}
+
+.battle-card.active:hover .battle-more span,
+.battle-more:focus-visible span {
+    transform: translate(3px, -3px);
 }
 
 .battle-footer-card {
@@ -1279,132 +1232,8 @@ a {
     filter: brightness(0) invert(1);
 }
 
-.footer {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    margin-left: -50vw;
-    margin-top: 30px;
-    background: #000;
-    overflow: hidden;
-}
-
-.footer-hero {
-    background: linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.72)), url('./img/footer.png') center/cover;
-    padding: 90px 8% 90px;
-    text-align: center;
-    margin-bottom: 0;
-}
-
-.footer-hero-inner {
-    max-width: 1100px;
-    margin: auto;
-}
-
-.footer-flower {
-    width: 45px;
-    margin-bottom: 30px;
-}
-
-.footer-title {
-    font-size: clamp(25px,3vw,42px);
-    line-height: 1.25;
-    margin: 14px 0 30px;
-}
-
-.footer-text {
-    font-size: 17px;
-    color: #ccc;
-    line-height: 1.7;
-}
-
-.footer-nav {
-    background: #fff;
-    color: #111;
-    padding: 90px 8% 35px;
-}
-
-.footer-nav-content {
-    display: flex;
-    gap: 70px;
-    align-items: center;
-}
-
-.footer-logo img {
-    width: 80px;
-}
-
-.footer-menu-block {
-    flex: 1;
-}
-
-.footer-menu-top,
-.footer-menu-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 25px;
-}
-
-.footer-menu-top {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-}
-
-.footer-menu-top h3 {
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.footer-socials {
-    display: flex;
-    gap: 18px;
-}
-
-.footer-socials a {
-    color: #333;
-    text-decoration: none;
-}
-
-.footer-menu-bottom {
-    padding-top: 22px;
-}
-
-.footer-menu-bottom nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.footer-menu-bottom nav a {
-    text-decoration: none;
-    color: #444;
-    font-size: 14px;
-}
-
-.footer-menu-bottom nav a:hover {
-    color: var(--red);
-}
-
-.footer-motto {
-    color: #777;
-    font-size: 12px;
-    text-align: right;
-}
-
-.footer-legal {
-    background: #9e0000;
-    padding: 12px 8%;
-    text-align: center;
-}
-
-.footer-legal a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 11px;
-}
-
 /* SCROLL REVEAL */
+
 .reveal {
     opacity: 0;
     transform: translateY(35px);
@@ -1443,14 +1272,6 @@ a {
         width: calc(100% - 10%);
     }
 
-    .navbar {
-        gap: 25px;
-    }
-
-    .nav-link {
-        padding-inline: 20px;
-    }
-
     .info-card {
         grid-template-columns: 1fr;
     }
@@ -1484,62 +1305,6 @@ a {
 
     .main-content {
         width: calc(100% - 30px);
-    }
-
-    .navbar {
-        min-height: 82px;
-        justify-content: center;
-    }
-
-    .nav-group {
-        display: none;
-    }
-
-    .burger-menu {
-        display: block;
-        position: absolute;
-        left: 15px;
-        top: 16px;
-    }
-
-    .side-panel {
-        display: block;
-        position: fixed;
-        inset: 0 auto 0 0;
-        width: min(82%, 340px);
-        background: #111;
-        z-index: 10000;
-        transform: translateX(-105%);
-        transition: transform .4s var(--ease);
-        padding: 70px 28px;
-        box-shadow: 10px 0 40px rgba(0,0,0,.45);
-    }
-
-    .side-panel.active {
-        transform: translateX(0);
-    }
-
-    .close-btn {
-        position: absolute;
-        right: 20px;
-        top: 17px;
-        border: 0;
-        background: none;
-        color: #fff;
-        font-size: 28px;
-    }
-
-    .side-nav {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        margin-top: 30px;
-    }
-
-    .side-nav a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 20px;
     }
 
     .hero-section {
@@ -1762,39 +1527,6 @@ a {
     .divider-text {
         font-size: 14px;
     }
-
-    .footer-hero {
-        padding: 65px 7% 65px;
-        margin-bottom: 0;
-    }
-
-    .footer-title br,
-    .footer-text br {
-        display: none;
-    }
-
-    .footer-nav {
-        padding: 65px 6% 30px;
-    }
-
-    .footer-nav-content {
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .footer-menu-top,
-    .footer-menu-bottom {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .footer-menu-bottom nav {
-        justify-content: center;
-    }
-
-    .footer-motto {
-        text-align: center;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1868,12 +1600,12 @@ a {
     }
 }
 
-
 /* =========================================================
    FINAL MOTION PASS — 1418 / MAP / ROAD RETURN / YEAR DETAILS
    ========================================================= */
 
 /* 1418: цветы/гвоздики меньше и полностью помещаются в композицию */
+
 .info-divider .divider-content {
     background-size: min(780px, 72vw) auto;
     background-repeat: no-repeat;
@@ -1881,6 +1613,7 @@ a {
     position: relative;
     isolation: isolate;
 }
+
 .info-divider .divider-content::after {
     content: "";
     position: absolute;
@@ -1891,6 +1624,7 @@ a {
     pointer-events: none;
     animation: dividerBreath 5s ease-in-out infinite;
 }
+
 .divider-number {
     position: relative;
     z-index: 2;
@@ -1899,21 +1633,26 @@ a {
 }
 
 /* Заголовок карты — светлый, контрастный, но без кислотного свечения */
+
 .map-heading .title {
     color: #f7f7f7;
     text-shadow: 0 3px 18px rgba(0,0,0,.45);
 }
+
 .map-heading p {
     color: #d2d2d2;
 }
+
 .map-heading .section-kicker.dark {
     color: #bcbcbc;
 }
 
 /* Точки карты читаются лучше */
+
 .map-section .pin {
     filter: drop-shadow(0 5px 9px rgba(0,0,0,.35));
 }
+
 .map-section .pin::after {
     content: "";
     position: absolute;
@@ -1927,6 +1666,7 @@ a {
     animation: pinPulse 2.8s ease-out infinite;
     pointer-events: none;
 }
+
 .map-section .pin.selected::after {
     width: 42px;
     height: 42px;
@@ -1934,6 +1674,7 @@ a {
 }
 
 /* Кнопки годов */
+
 .year-actions {
     margin-top: 24px;
     display: flex;
@@ -1981,45 +1722,57 @@ a {
     letter-spacing: .02em;
     transition: transform .35s ease, background .35s ease, border-color .35s ease;
 }
+
 .year-more-btn:hover {
     transform: translateY(-3px);
     background: rgba(158,0,0,.72);
     border-color: rgba(255,255,255,.35);
 }
+
 .year-more-arrow {
     transition: transform .35s ease;
 }
+
 .year-more-btn:hover .year-more-arrow {
     transform: translate(2px,-2px);
 }
 
 /* Возврат вверх: элементы дороги памяти действительно "заезжают" обратно */
+
 .road-return .banner-card {
     animation: roadReturnCard 1.15s var(--ease) both;
 }
+
 .road-return .year-section {
     animation: roadReturnYears 1.05s var(--ease) both;
 }
+
 .road-return .year-section:nth-child(2) { animation-delay: .06s; }
+
 .road-return .year-section:nth-child(3) { animation-delay: .12s; }
+
 .road-return .year-section:nth-child(4) { animation-delay: .18s; }
+
 .road-return .year-section:nth-child(5) { animation-delay: .24s; }
 
-
 /* Повторный reveal при прокрутке вверх */
+
 .return-reveal {
     animation: returnReveal 1.05s var(--ease) both;
 }
 
 /* Прелоадер */
+
 body.loading {
     overflow: hidden;
 }
+
 .preloader {
     background:
         radial-gradient(circle at center, rgba(120,0,0,.08), transparent 38%),
         #070707;
 }
+
 .preloader::before {
     content: "";
     position: absolute;
@@ -2028,15 +1781,18 @@ body.loading {
     background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
     animation: preloaderLine 2.8s ease-in-out infinite;
 }
+
 .preloader-inner {
     position: relative;
     z-index: 2;
 }
+
 .preloader-years {
     animation: preloaderYears 2.2s ease-in-out infinite;
 }
 
 /* Мягкая жизнь hero */
+
 .hero-section::before {
     content: "";
     position: absolute;
@@ -2047,49 +1803,58 @@ body.loading {
     animation: heroBackgroundDrift 28s ease-in-out infinite alternate;
 }
 
-
 @keyframes dividerBreath {
     0%,100% { transform: scale(.97); opacity: .22; }
     50% { transform: scale(1.02); opacity: .42; }
 }
+
 @keyframes numberFloat {
     0%,100% { transform: translateY(0); }
     50% { transform: translateY(-7px); }
 }
+
 @keyframes pinPulse {
     0% { transform: translate(-50%,-50%) scale(.65); opacity: .75; }
     70%,100% { transform: translate(-50%,-50%) scale(1.45); opacity: 0; }
 }
+
 @keyframes yearDetailsIn {
     from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 @keyframes roadReturnCard {
     0% { opacity: .25; transform: translateY(38px) scale(.97); filter: blur(4px); }
     55% { opacity: 1; transform: translateY(-5px) scale(1.005); filter: blur(0); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
+
 @keyframes roadReturnYears {
     0% { opacity: .45; transform: translateX(55px); }
     65% { opacity: 1; transform: translateX(-4px); }
     100% { opacity: 1; transform: translateX(0); }
 }
+
 @keyframes returnReveal {
     0% { opacity: .55; transform: translateY(28px) scale(.985); filter: blur(2px); }
     100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
+
 @keyframes preloaderLine {
     0%,100% { transform: scaleX(.35); opacity: .25; }
     50% { transform: scaleX(1); opacity: .8; }
 }
+
 @keyframes preloaderYears {
     0%,100% { opacity: .72; letter-spacing: .2em; }
     50% { opacity: 1; letter-spacing: .25em; }
 }
+
 @keyframes heroBackgroundDrift {
     from { transform: scale(1.03); }
     to { transform: scale(1.1); }
 }
+
 @keyframes caretBlink {
     0%, 49% { opacity: 1; }
     50%, 100% { opacity: 0; }
@@ -2109,8 +1874,8 @@ body.loading {
     }
 }
 
-
 /* ===== Модальная формочка (герои и годы) ===== */
+
 body.modal-open {
     overflow: hidden;
 }
@@ -2193,6 +1958,7 @@ body.modal-open {
 }
 
 /* герой: текст слева (прокручивается), фото справа целиком */
+
 .modal-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 240px;
@@ -2341,8 +2107,8 @@ body.modal-open {
     }
 }
 
-
 /* ===== Hero: улучшения ===== */
+
 .hero-section {
     min-height: 700px;
     min-height: max(640px, calc(100svh - 175px));

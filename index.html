@@ -8,6 +8,10 @@
     <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="components/header.css">
+    <link rel="stylesheet" href="components/footer.css">
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -21,41 +25,7 @@
     </div>
 </div>
 
-<header class="main-header">
-    <nav class="navbar">
-        <button class="burger-menu" id="burgerToggle" aria-label="Открыть меню">
-            <span></span><span></span><span></span>
-        </button>
-
-        <div class="nav-group">
-            <a href="#top" class="nav-link active">Главная</a>
-            <a href="#heroes" class="nav-link">Герои</a>
-        </div>
-
-        <a href="#top" class="logo-container" aria-label="На главную">
-            <div class="logo-circle">
-                <img src="./img/logo.png" alt="Логотип" class="logo-img">
-            </div>
-        </a>
-
-        <div class="nav-group">
-            <a href="#history" class="nav-link">История</a>
-            <a href="#battles" class="nav-link">Битвы</a>
-        </div>
-    </nav>
-</header>
-
-<div class="side-panel" id="sidePanel" aria-hidden="true">
-    <button class="close-btn" id="closePanel" aria-label="Закрыть меню">✕</button>
-    <nav class="side-nav">
-        <a href="#top">Главная</a>
-        <a href="#heroes">Герои</a>
-        <a href="#history">История</a>
-        <a href="#battles">Битвы</a>
-        <a href="#map">Карта</a>
-        <a href="#chronicle">Хроника</a>
-    </nav>
-</div>
+<site-header></site-header>
 
 <main class="main-content" id="top">
 
@@ -371,31 +341,43 @@
                 <div class="battles-wrapper" id="battlesWrapper">
                     <article class="battle-card side" data-index="0">
                         <img src="./img/bitv/Grodno.png" alt="Оборона Гродно" loading="lazy">
+                        <a class="battle-link" href="battles/grodno.html" tabindex="-1" aria-hidden="true"></a>
                         <div class="battle-info-main">
                             <span class="battle-type">ПРЕДЫСТОРИЯ</span>
                             <h3>Оборона Гродно</h3>
                             <p>Событие сентября 1939 года. Оно относится к началу Второй мировой войны и помещено здесь как исторический контекст, а не как сражение Великой Отечественной войны.</p>
-                            <span class="battle-date">20–22 сентября 1939</span>
+                            <div class="battle-meta">
+                                <a class="battle-more" href="battles/grodno.html">Подробнее <span aria-hidden="true">↗</span></a>
+                                <span class="battle-date">20–22 сентября 1939</span>
+                            </div>
                         </div>
                     </article>
 
                     <article class="battle-card active" data-index="1">
                         <img src="./img/bitv/Grodno.png" alt="Сталинградская битва" loading="lazy">
+                        <a class="battle-link" href="battles/stalingrad.html" tabindex="-1" aria-hidden="true"></a>
                         <div class="battle-info-main">
                             <span class="battle-type">ПЕРЕЛОМ</span>
                             <h3>Сталинградская битва</h3>
                             <p>Одно из крупнейших и наиболее кровопролитных сражений войны. Окружение немецкой группировки стало важнейшим стратегическим и психологическим переломом.</p>
-                            <span class="battle-date">17 июля 1942 — 2 февраля 1943</span>
+                            <div class="battle-meta">
+                                <a class="battle-more" href="battles/stalingrad.html">Подробнее <span aria-hidden="true">↗</span></a>
+                                <span class="battle-date">17 июля 1942 — 2 февраля 1943</span>
+                            </div>
                         </div>
                     </article>
 
                     <article class="battle-card side" data-index="2">
                         <img src="./img/bitv/Curck.png" alt="Курская битва" loading="lazy">
+                        <a class="battle-link" href="battles/kursk.html" tabindex="-1" aria-hidden="true"></a>
                         <div class="battle-info-main">
                             <span class="battle-type">ПЕРЕЛОМ</span>
                             <h3>Курская битва</h3>
                             <p>После победы на Курской дуге стратегическая инициатива окончательно перешла к Красной Армии.</p>
-                            <span class="battle-date">5 июля — 23 августа 1943</span>
+                            <div class="battle-meta">
+                                <a class="battle-more" href="battles/kursk.html">Подробнее <span aria-hidden="true">↗</span></a>
+                                <span class="battle-date">5 июля — 23 августа 1943</span>
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -451,44 +433,7 @@
         </div>
     </section>
 
-    <footer class="footer">
-        <div class="footer-hero">
-            <div class="footer-hero-inner">
-                <img src="./img/Vector.png" class="footer-flower" alt="">
-                <div class="section-kicker">ФИНАЛ / ПАМЯТЬ</div>
-                <h2 class="footer-title">За каждым именем на этом сайте — судьба человека,<br>который отдал жизнь за мирное небо над нашей головой.</h2>
-                <p class="footer-text">Если у Вас есть материалы или истории о ветеранах вашей семьи — свяжитесь с нами.<br>Давайте сохраним память вместе.</p>
-            </div>
-        </div>
-
-
-        <div class="footer-nav">
-            <div class="footer-nav-content">
-                <div class="footer-logo"><img src="./img/logo.png" alt="Логотип"></div>
-                <div class="footer-menu-block">
-                    <div class="footer-menu-top">
-                        <h3>Навигация по сайту</h3>
-                        <div class="footer-socials">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                    <div class="footer-menu-bottom">
-                        <nav>
-                            <a href="#top">Главная</a>
-                            <a href="#heroes">Герои</a>
-                            <a href="#chronicle">История</a>
-                            <a href="#battles">Битвы</a>
-                            <a href="#map">Карта</a>
-                        </nav>
-                        <span class="footer-motto">История не заканчивается на этих страницах.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-legal"><a href="#">Политика обработки персональных данных</a></div>
-    </footer>
+    <site-footer></site-footer>
 </main>
 
 
@@ -574,25 +519,6 @@
         startPreloader();
     }
 
-    /* MOBILE MENU */
-    const burger = $('#burgerToggle');
-    const sidePanel = $('#sidePanel');
-    const closePanel = $('#closePanel');
-
-    function closeMenu() {
-        sidePanel?.classList.remove('active');
-        sidePanel?.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('menu-open');
-    }
-
-    burger?.addEventListener('click', () => {
-        sidePanel?.classList.add('active');
-        sidePanel?.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('menu-open');
-    });
-    closePanel?.addEventListener('click', closeMenu);
-    $$('.side-nav a').forEach(link => link.addEventListener('click', closeMenu));
-
     /* HERO SLIDER: нативная прокрутка со scroll-snap, стрелки листают по карточке */
     const heroSection = $('#heroes');
     const heroViewport = $('.cards-viewport');
@@ -660,6 +586,8 @@
         battleCards.forEach((card, index) => {
             card.classList.toggle('active', index === battleIndex);
             card.classList.toggle('side', index !== battleIndex);
+            const more = card.querySelector('.battle-more');
+            if (more) more.tabIndex = index === battleIndex ? 0 : -1;
         });
 
         if (battlePrev) {
@@ -988,29 +916,6 @@
         requestAnimationFrame(updateHeroScroll);
     }, { passive: true });
     updateHeroScroll();
-
-    /* ACTIVE NAV */
-    const navLinks = $$('.nav-link');
-    const sections = ['heroes', 'history', 'battles', 'map', 'chronicle']
-        .map(id => document.getElementById(id))
-        .filter(Boolean);
-
-    if ('IntersectionObserver' in window) {
-        const navObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id));
-                }
-            });
-        }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
-        sections.forEach(section => navObserver.observe(section));
-    }
-
-    /* HEADER */
-    const header = $('.main-header');
-    window.addEventListener('scroll', () => {
-        header?.classList.toggle('scrolled', window.scrollY > 30);
-    }, { passive: true });
 
     updateHeroSlider();
     updateBattleSlider(true);
