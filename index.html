@@ -7,7 +7,7 @@
     <title>Сохраним память вместе</title>
     <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="components/header.css">
     <link rel="stylesheet" href="components/footer.css">
     <script src="components/header.js"></script>
@@ -761,7 +761,6 @@
         map.on('mouseout', () => map.scrollWheelZoom.disable());
         map.once('click zoomstart dragstart', () => mapHint?.classList.add('is-gone'));
         window.addEventListener('load', () => map.invalidateSize());
-        initTimeline();
     } else if (mapEl) {
         mapEl.innerHTML = '<p class="map-fallback">Карта не загрузилась. Найдите место через поиск ниже.</p>';
     }
@@ -855,7 +854,7 @@
 
     function initTimeline() {
         const box = $('#mapLayers');
-        if (!box || !steps.length) return;
+        if (!box || !steps.length || !map) return;
         frontLayer = L.layerGroup().addTo(map);
         arrowLayer = L.layerGroup().addTo(map);
 
@@ -880,6 +879,9 @@
         box.hidden = false;
         applyStep(0);
     }
+
+    // Инициализируем временную шкалу только после объявления steps и initTimeline.
+    if (map && steps.length) initTimeline();
 
     /* ПОИСК с подсказками */
     const normalize = s => (s || '').toLowerCase().replace(/ё/g, 'е').replace(/[«»"'.,]/g, '').replace(/\s+/g, ' ').trim();
