@@ -14,44 +14,47 @@
 <link rel="stylesheet" href="css/heroes.css">
 </head>
 <body>
-
+ 
 <div class="bg-flowers" aria-hidden="true">
-  <i class="fl f1"></i><i class="fl f2"></i><i class="fl f3"></i><i class="fl f4"></i><i class="fl f5"></i><i class="fl f6"></i><i class="fl f7"></i>
+<i class="fl f1"></i><i class="fl f2"></i><i class="fl f3"></i><i class="fl f4"></i><i class="fl f5"></i><i class="fl f6"></i><i class="fl f7"></i>
 </div>
-
+ 
 <!-- ХЕДЕР: подтягивается с главной страницы (тут не верстается) -->
 <site-header></site-header>
-
+ 
 <div class="wrap">
-  <div class="inner">
-    <section class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-in">
-        <h1>Герои Великой<br>Отечественной войны</h1>
-        <p>В этом каталоге собраны имена и подвиги тех, кто с оружием в руках и на трудовом посту отстоял свободу и независимость нашей Родины.</p>
-        <a href="#catalog" class="btn big">Смотреть героев</a>
-      </div>
-    </section>
-
-    <form class="search" id="searchForm" autocomplete="off">
-      <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5" fill="currentColor"/><path d="M3.5 22c0-5 3.8-8 8.5-8s8.5 3 8.5 8z" fill="currentColor"/></svg>
-      <input id="searchInput" type="search" placeholder="Вы тоже можете найти определённого героя">
-      <button type="submit" class="btn">Поиск
-        <svg viewBox="0 0 24 24" width="1.1em" height="1.1em"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-      </button>
-    </form>
-
-    <main id="catalog">
-      <div class="grid" id="grid"></div>
-      <p class="empty" id="empty" hidden>Никого не нашли. Попробуйте изменить запрос.</p>
-      <nav class="pager" id="pager" aria-label="Страницы"></nav>
-      <site-footer></site-footer>
-    </main>
-  </div>
+<div class="inner">
+ 
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-in">
+<h1>Герои Великой<br>Отечественной войны</h1>
+<p>В этом каталоге собраны имена и подвиги тех, кто с оружием в руках и на трудовом посту отстоял свободу и независимость нашей Родины.</p>
+<a href="#catalog" class="btn big">Смотреть героев</a>
 </div>
-
-<!-- ФУТЕР: подтягивается с главной страницы (тут не верстается) -->
-
+</section>
+ 
+<form class="search" id="searchForm" autocomplete="off">
+<svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5" fill="currentColor"/><path d="M3.5 22c0-5 3.8-8 8.5-8s8.5 3 8.5 8z" fill="currentColor"/></svg>
+<input id="searchInput" type="search" placeholder="Вы тоже можете найти определённого героя">
+<button type="submit" class="btn">Поиск
+<svg viewBox="0 0 24 24" width="1.1em" height="1.1em"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+</button>
+</form>
+ 
+<main id="catalog">
+<div class="grid" id="grid"></div>
+<p class="empty" id="empty" hidden>Никого не нашли. Попробуйте изменить запрос.</p>
+<nav class="pager" id="pager" aria-label="Страницы"></nav>
+</main>
+ 
+</div>
+</div>
+ 
+<!-- ФУТЕР: подтягивается с главной страницы (тут не верстается).
+     Стоит вне .wrap / .inner / main, чтобы не наследовать их ширину и отступы — как в hero.html -->
+<site-footer></site-footer>
+ 
 <script src="js/heroes-data.js"></script>
 <script src="js/heroes.js"></script>
 </body>
