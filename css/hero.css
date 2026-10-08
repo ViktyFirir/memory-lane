@@ -1,0 +1,171 @@
+/* ===== Страница героя: ЕДИНЫЙ CSS (ничего больше подключать не нужно) =====
+   --u = 1px макета 1440; на 1920px экрана 1u = 1.33px, шире — не растёт. */
+:root{
+  --u:calc(min(100vw,1920px) / 1440);
+  --red:#8f0a0a; --red-hi:#c01414; --card:#d9d9d9;
+  --fl:url("../img/Gvozd2.png");
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{position:relative;font-family:"Montserrat",sans-serif;color:#fff;background:#0b0b0b;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+svg,img{display:block}
+
+/* Гвоздики на фоне */
+.bg-flowers{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.fl{position:absolute;background:var(--fl) no-repeat center/contain;aspect-ratio:.415}
+.fl::after{content:"";position:absolute;inset:0;background:inherit}
+.f1{width:calc(520*var(--u));right:calc(-250*var(--u));top:calc(1000*var(--u));transform:rotate(-8deg)}
+.f2{width:calc(480*var(--u));left:calc(-300*var(--u));top:calc(1500*var(--u));transform:scaleX(-1) rotate(10deg)}
+
+.wrap{position:relative;z-index:1;padding:calc(48*var(--u)) 24px calc(90*var(--u))}
+.inner{width:calc(1228*var(--u));max-width:100%;margin:0 auto}
+.hp-404{text-align:center;padding:80px 0}
+
+.hp{width:calc(1140*var(--u));max-width:100%;margin:0 auto}
+.hp h1{font-size:max(20px,calc(28*var(--u)));font-weight:500;text-align:center;line-height:1.25;margin-bottom:calc(30*var(--u))}
+.hp h2{font-size:max(18px,calc(30*var(--u)));font-weight:500;line-height:1.25;margin-bottom:calc(14*var(--u))}
+.hp p,.hp li{font-size:max(12px,calc(14*var(--u)));line-height:1.55;font-weight:400;color:#ddd}
+.hp b{font-weight:700;color:#fff}
+
+/* ===== 1. Верхняя панель ===== */
+.hp-top{background:#0c0c0c;border-radius:calc(40*var(--u));padding:calc(34*var(--u)) calc(46*var(--u)) calc(46*var(--u));box-shadow:0 10px 40px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.04)}
+.hp-top-grid{display:grid;grid-template-columns:calc(380*var(--u)) 1fr;gap:calc(26*var(--u));align-items:stretch}
+.hp-photo{border-radius:calc(20*var(--u));overflow:hidden;background:#cbcbcb;aspect-ratio:1/1.08;border:calc(4*var(--u)) solid #fff}
+.hp-photo img{width:100%;height:100%;object-fit:cover}
+.hp-top-right{display:flex;flex-direction:column;gap:calc(20*var(--u))}
+.hp-white{background:#fff;color:#222;border-radius:calc(22*var(--u));padding:calc(22*var(--u)) calc(28*var(--u));box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.hp-white h2,.hp-white h3{color:#2a2a8c;font-size:max(12px,calc(15*var(--u)));font-weight:600;margin-bottom:calc(10*var(--u))}
+.hp-white p{color:#555;font-size:max(11px,calc(13*var(--u)))}
+.hp-brief{flex:1}
+.hp-facts{display:grid;grid-template-columns:1.5fr 1fr;gap:0}
+.hp-facts>div:first-child{padding-right:calc(24*var(--u));border-right:1px solid #ddd}
+.hp-facts>div:last-child{padding-left:calc(28*var(--u))}
+.hp-facts h3{color:#888;font-weight:500}
+.hp-facts p{color:#111;font-weight:600;font-size:max(12px,calc(14*var(--u)))}
+
+/* ===== 2. Серая панель ===== */
+.hp-story{margin-top:calc(46*var(--u));background:linear-gradient(#2b2b2b,#1f1f1f);border-radius:calc(40*var(--u));padding:calc(50*var(--u)) calc(52*var(--u)) calc(40*var(--u));width:calc(1010*var(--u));max-width:100%;margin-left:auto;margin-right:auto;box-shadow:0 10px 40px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:calc(34*var(--u))}
+.hp-block{display:grid;grid-template-columns:1fr calc(190*var(--u));gap:calc(40*var(--u));align-items:start}
+.hp-side{border-radius:calc(20*var(--u));overflow:hidden;background:#cbcbcb;aspect-ratio:1/1;border:calc(3*var(--u)) solid #e8e8e8}
+.hp-side img{width:100%;height:100%;object-fit:cover}
+.hp-side.empty{background:#3a3a3a;border-color:#444}
+.hp-text ul{margin:calc(14*var(--u)) 0 0 1.1em;display:grid;gap:calc(10*var(--u))}
+.hp-text li::marker{color:#c01414}
+.hp-redbtn{display:block;text-align:center;background:linear-gradient(#d40d0d,#a30808);color:#fff;border-radius:99px;font-weight:600;font-size:max(12px,calc(15*var(--u)));padding:calc(15*var(--u)) 0;margin-top:calc(6*var(--u));transition:.25s}
+.hp-redbtn:hover{box-shadow:0 6px 18px rgba(192,20,20,.5);transform:translateY(-2px)}
+
+/* Карусель наград */
+.hp-car-head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:calc(-14*var(--u))}
+.hp-car-head span{font-size:max(11px,calc(12*var(--u)));color:#bbb;max-width:60%}
+.hp-arrows{display:flex;gap:calc(8*var(--u))}
+.hp-arrows button{width:calc(30*var(--u));height:calc(30*var(--u));min-width:26px;min-height:26px;border:0;border-radius:50%;background:#e6e6e6;color:#333;font-size:18px;line-height:1;cursor:pointer;transition:.2s}
+.hp-arrows button.on{background:var(--red-hi);color:#fff}
+.hp-car{display:flex;gap:calc(20*var(--u));overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 2px}
+.hp-car::-webkit-scrollbar{display:none}
+.hp-award{flex:0 0 calc((100% - 2*20*var(--u))/3);scroll-snap-align:start;background:var(--card);color:#111;border-radius:calc(24*var(--u));padding:calc(10*var(--u));display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.aw-img{aspect-ratio:1/.9;background:#fff;border-radius:calc(16*var(--u));display:grid;place-items:center;overflow:hidden}
+.aw-img img{width:100%;height:100%;object-fit:contain}
+.hp-award h3{font-size:max(11px,calc(13*var(--u)));font-weight:600;line-height:1.3;margin:calc(14*var(--u)) calc(8*var(--u)) calc(6*var(--u))}
+.hp .hp-award p{color:#555;font-size:max(10px,calc(11*var(--u)));margin:0 calc(8*var(--u)) calc(8*var(--u))}
+.hp-dots{display:flex;justify-content:center;gap:6px}
+.hp-dots i{width:6px;height:6px;border-radius:50%;background:#666;transition:.2s}
+.hp-dots i.on{background:var(--red-hi)}
+
+/* ===== 3. Таблица мемориалов ===== */
+.hp-mem{margin-top:calc(60*var(--u))}
+.hp-mem h2{font-weight:700;font-size:max(18px,calc(24*var(--u)))}
+.hp-mem>p{margin-bottom:calc(22*var(--u));color:#ccc}
+.hp-tablewrap{overflow-x:auto;border-radius:calc(18*var(--u));box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.hp-table{width:100%;min-width:560px;border-collapse:collapse;background:#fff;color:#111;font-size:max(11px,calc(14*var(--u)))}
+.hp-table th{background:#1c1c1c;color:#fff;font-weight:700;padding:calc(14*var(--u)) calc(20*var(--u));text-align:center;border-left:1px solid #444}
+.hp-table th:first-child{border-left:0}
+.hp-table td{padding:calc(16*var(--u)) calc(22*var(--u));border-top:1px solid #d6d6d6;border-left:1px solid #d6d6d6;line-height:1.45;vertical-align:middle}
+.hp-table td:first-child{border-left:0}
+.hp-table td.loc{background:#d9d9d9;text-align:center;width:22%}
+.hp-table td:nth-child(2){width:30%}
+
+/* ===== 4. Карта ===== */
+.hp-mapsec{margin-top:calc(70*var(--u));text-align:center}
+.logo{width:calc(72*var(--u));height:calc(72*var(--u));min-width:48px;min-height:48px;border-radius:50%;background:url("../img/kr.png") center/100% 100% no-repeat;display:grid;place-items:center;margin:0 auto calc(18*var(--u));animation:glow 3.2s ease-in-out infinite}
+.logo img{width:50%;height:auto;animation:float 3.2s ease-in-out infinite}
+.hp-mapsec h2{font-weight:700;font-size:max(18px,calc(26*var(--u)))}
+.hp-mapsec>p{max-width:calc(900*var(--u));margin:0 auto calc(26*var(--u));color:#ccc}
+.hp-map{border-radius:calc(18*var(--u));overflow:hidden;height:calc(300*var(--u));min-height:220px;background:#e6e6e6;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.hp-map iframe{width:100%;height:100%;border:0}
+
+/* ===== Адаптив ===== */
+@media(max-width:1100px){
+  .hp-top{padding:24px;border-radius:28px}
+  .hp-top-grid{grid-template-columns:240px 1fr;gap:18px}
+  .hp-story{padding:28px 24px;border-radius:28px;gap:26px}
+  .hp-block{grid-template-columns:1fr 160px;gap:22px}
+}
+@media(max-width:700px){
+  .hp-top-grid{grid-template-columns:1fr}
+  .hp-photo{max-width:300px;width:100%;margin:0 auto}
+  .hp-facts{grid-template-columns:1fr;gap:14px}
+  .hp-facts>div:first-child{padding:0 0 14px;border-right:0;border-bottom:1px solid #ddd}
+  .hp-facts>div:last-child{padding-left:0}
+  .hp-block{grid-template-columns:1fr}
+  .hp-side{max-width:220px}
+  .hp-car-head span{max-width:70%}
+  .hp-award{flex-basis:78%}
+}
+
+/* блок без картинки справа */
+.hp-block.noside{grid-template-columns:1fr}
+
+/* ===== АНИМАЦИИ ===== */
+.rv{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform .7s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.hp-photo.rv{transform:translateX(-40px) scale(.96)}
+.hp-photo.rv.in{transform:none}
+.hp-side.rv{transform:translateX(40px) scale(.94)}
+.hp-side.rv.in{transform:none}
+.hp-text li.rv{transform:translateX(-24px)}
+.hp-text li.rv.in{transform:none}
+.hp-table tbody tr.rv{transform:translateX(-20px)}
+.hp-table tbody tr.rv.in{transform:none}
+.logo.rv{transform:scale(.6)}
+.logo.rv.in{transform:none}
+
+/* фото: плавный зум и подсветка */
+.hp-photo img,.hp-side img{transition:transform .8s}
+.hp-photo:hover img,.hp-side:hover img{transform:scale(1.07)}
+.hp-photo,.hp-side{transition:box-shadow .4s,opacity .7s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform .7s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.hp-photo:hover,.hp-side:hover{box-shadow:0 0 0 2px var(--red-hi),0 12px 30px rgba(143,10,10,.45)}
+
+/* белые карточки и награды */
+.hp-white{transition:transform .35s,box-shadow .35s,opacity .7s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.hp-white:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.hp-award{transition:transform .35s,box-shadow .35s,opacity .7s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.hp-award:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 14px 30px rgba(143,10,10,.5)}
+.aw-img img{transition:transform .5s}
+.hp-award:hover .aw-img img{transform:scale(1.08) rotate(-2deg)}
+
+/* красная кнопка: блик и пульс */
+.hp-redbtn{position:relative;overflow:hidden;animation:pulse 2.8s ease-in-out infinite}
+.hp-redbtn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);animation:shine 3.4s ease-in-out infinite}
+.hp-arrows button:hover{transform:scale(1.15)}
+.hp-dots i{transition:.3s}
+.hp-dots i.on{transform:scale(1.5)}
+
+/* таблица */
+.hp-table tbody tr{transition:background .25s,opacity .6s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform .6s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.hp-table tbody tr:hover td:not(.loc){background:#f3dcdc}
+
+/* заголовки: красная линия растёт */
+.hp-text h2{position:relative;display:inline-block}
+.hp-text h2::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--red-hi);transition:width .9s .3s}
+.hp-text.in h2::after,.hp-block.in h2::after{width:100%}
+
+/* гвоздики на фоне плавно покачиваются */
+.fl{animation:sway 9s ease-in-out infinite alternate}
+.f2{animation-duration:11s;animation-delay:-3s}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(192,20,20,.55)}50%{box-shadow:0 0 0 12px rgba(192,20,20,0)}}
+@keyframes shine{0%,55%{left:-60%}100%{left:140%}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 0 rgba(192,20,20,0))}50%{filter:drop-shadow(0 0 12px rgba(192,20,20,.6))}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes sway{from{translate:0 0;rotate:-2deg}to{translate:0 14px;rotate:2deg}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}

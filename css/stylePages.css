@@ -1,0 +1,283 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #050505; /* Почти черный фон сайта */
+    color: #FFFFFF;
+}
+
+.chronology-1941 {
+    position: relative;
+    overflow: hidden; /* Скрывает то, что вылазит за края (куски гвоздик) */
+    padding-top: 40px; 
+}
+
+/* --- Настройки декоративных гвоздик --- */
+.decor-carnation {
+    position: absolute;
+    width: 600px;
+    height: 900px;
+    background-image: url('img/carnation.png'); 
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.45; /* Слегка смягчил прозрачность, т.к. их теперь много */
+    filter: blur(6px);
+    z-index: 0;
+    pointer-events: none; /* Чтобы не мешали кликать на текст */
+}
+
+/* 1. Верхняя левая */
+.carnation-1 {
+    top: 50px;
+    left: -150px;
+    transform: rotate(-10deg);
+}
+
+/* 2. Чуть ниже, справа (перевернутая) */
+.carnation-2 {
+    top: 900px;
+    right: -100px;
+    transform: scaleX(-1) rotate(15deg);
+}
+
+/* 3. Вторая половина страницы, слева */
+.carnation-3 {
+    top: 1800px;
+    left: -200px;
+    transform: rotate(20deg);
+}
+
+/* 4. В самом низу, справа (перевернутая) */
+.carnation-4 {
+    top: 2500px;
+    right: -150px;
+    transform: scaleX(-1) rotate(-5deg);
+}
+
+/* --- Контейнер страницы --- */
+.chronology-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1; /* Чтобы контент был поверх гвоздик */
+}
+
+/* --- Секция Hero --- */
+.hero-section {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 40px;
+    padding: 140px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: clamp(80px, 10vw, 180px);
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.hero-subtitle {
+    font-size: clamp(20px, 2.5vw, 36px);
+    font-weight: 400;
+    margin-bottom: 40px;
+    color: #EAEAEA;
+}
+
+.btn-red {
+    display: inline-block;
+    background-color: #B50000;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 20px 50px;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-red:hover {
+    background-color: #8C0000;
+    transform: translateY(-2px);
+}
+
+/* --- Основная контентная карточка --- */
+.content-card {
+    background-color: #121212; /* Очень темный серый фон блока, почти черный */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 40px;
+    padding: 80px 100px;
+    margin-bottom: 60px;
+}
+
+.intro-text {
+    font-size: 20px;
+    line-height: 1.6;
+    color: #D4D4D4;
+    margin-bottom: 50px;
+}
+
+.red-banner {
+    background-color: #B50000;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.red-banner h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* --- Текстовые блоки --- */
+.text-block {
+    margin-bottom: 70px;
+}
+
+.text-block:last-child {
+    margin-bottom: 0;
+}
+
+.block-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #FFFFFF;
+}
+
+.text-block p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #BDBDBD;
+    margin-bottom: 20px;
+}
+
+.text-block p strong {
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+/* Блоки с картинками сбоку */
+.with-image {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.with-image .text-content {
+    flex: 1;
+}
+
+.with-image .image-content {
+    flex-shrink: 0;
+    width: 380px; 
+}
+
+.with-image .image-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Блок с широкой картинкой внизу */
+.wide-image-wrapper {
+    margin-top: 40px;
+}
+
+.wide-image-wrapper img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    display: block;
+}
+
+/* --- АДАПТИВНОСТЬ --- */
+@media (max-width: 1024px) {
+    .content-card {
+        padding: 50px 40px;
+    }
+    
+    .with-image {
+        gap: 30px;
+    }
+
+    .with-image .image-content {
+        width: 300px;
+    }
+
+    .block-title {
+        font-size: 24px;
+    }
+
+    .text-block p {
+        font-size: 16px;
+    }
+
+    /* На планшетах делаем гвоздики поменьше */
+    .decor-carnation {
+        width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 100px 15px;
+        border-radius: 20px;
+    }
+
+    .content-card {
+        padding: 40px 20px;
+        border-radius: 20px;
+    }
+
+    .with-image {
+        flex-direction: column;
+    }
+
+    .with-image .image-content {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .red-banner h2 {
+        font-size: 20px;
+    }
+
+    .intro-text {
+        font-size: 16px;
+    }
+
+    /* На телефонах скрываем гвоздики, чтобы не нагружали интерфейс */
+    .decor-carnation {
+        display: none;
+    }
+}
