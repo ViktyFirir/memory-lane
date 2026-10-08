@@ -15,13 +15,21 @@
     const ROOT = SCRIPT_URL ? new URL('../', SCRIPT_URL).href : './';
     const HOME = ROOT + 'index.html';
 
+    /* стили компонента подключаем сами, если страница забыла добавить <link> */
+    if (SCRIPT_URL && !document.querySelector('link[href*="footer.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = ROOT + 'components/footer.css';
+        document.head.appendChild(link);
+    }
+
     const trimIndex = path => path.replace(/index\.html$/, '');
     const onHome = trimIndex(location.pathname) === trimIndex(new URL(HOME).pathname);
-    const href = hash => (onHome ? hash : HOME + hash);
+    const href = (hash, page) => (page ? ROOT + page : (onHome ? hash : HOME + hash));
 
     const MENU = [
         { hash: '#top',       label: 'Главная' },
-        { hash: '#heroes',    label: 'Герои' },
+        { hash: '#heroes',    page: 'heroes.html', label: 'Герои' },
         { hash: '#chronicle', label: 'История' },
         { hash: '#battles',   label: 'Битвы' },
         { hash: '#map',       label: 'Карта' }
@@ -56,7 +64,7 @@
                 </div>
                 <div class="footer-menu-bottom">
                     <nav>
-                        ${MENU.map(m => `<a href="${href(m.hash)}">${m.label}</a>`).join('\n                        ')}
+                        ${MENU.map(m => `<a href="${href(m.hash, m.page)}">${m.label}</a>`).join('\n                        ')}
                     </nav>
                     <span class="footer-motto">История не заканчивается на этих страницах.</span>
                 </div>

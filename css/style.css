@@ -32,7 +32,7 @@ body {
     overflow-x: hidden;
     background-image:
         linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.7)),
-        url('./img/back-main.png');
+        url('../img/back-main.png');
     background-size: cover;
     background-attachment: fixed;
 }
@@ -124,7 +124,7 @@ a {
     margin-top: 155px;
     border-radius: 40px;
     border: 1px solid rgba(255,255,255,.22);
-    background: url('./img/main-block.png') center/cover no-repeat;
+    background: url('../img/main-block.png') center/cover no-repeat;
     position: relative;
     display: grid;
     place-items: center;
@@ -675,7 +675,7 @@ a {
 }
 
 .memorial-container {
-    background: #000 url('./img/fon.png') center/cover;
+    background: #000 url('../img/fon.png') center/cover;
     border-radius: 55px;
     padding-bottom: 40px;
     overflow: hidden;
@@ -690,7 +690,7 @@ a {
     text-align: center;
     border-radius: 45px;
     border: 1px solid var(--line);
-    background: linear-gradient(rgba(20,20,20,.35),rgba(27,23,23,.45)), url('./img/back-verh.png') center/cover;
+    background: linear-gradient(rgba(20,20,20,.35),rgba(27,23,23,.45)), url('../img/back-verh.png') center/cover;
 }
 
 .flower-icon img {
@@ -750,7 +750,7 @@ a {
     position: relative;
     border: 1px solid var(--line);
     border-radius: 45px;
-    background: linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.42)), url('./img/bc-card.png') center/cover;
+    background: linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.42)), url('../img/bc-card.png') center/cover;
     overflow: visible;
 }
 
@@ -794,7 +794,7 @@ a {
     inset: -35px -20px;
     background:
         linear-gradient(180deg,rgba(255,0,0,.35),rgba(105,0,0,.2)),
-        url('./img/tank.png') center/cover;
+        url('../img/tank.png') center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -840,7 +840,7 @@ a {
     max-width: 1100px;
     margin: auto;
     padding: 40px 0;
-    background: url('./img/bc-flour.png') center/cover;
+    background: url('../img/bc-flour.png') center/cover;
 }
 
 .divider-number {
@@ -1401,7 +1401,7 @@ a {
         min-height: 0;
         padding: 20px;
         border-radius: 28px;
-        background: linear-gradient(180deg,rgba(0,0,0,.92),rgba(40,0,0,.7)),url('./img/bc-card.png') center/cover;
+        background: linear-gradient(180deg,rgba(0,0,0,.92),rgba(40,0,0,.7)),url('../img/bc-card.png') center/cover;
     }
 
     .col-left,
@@ -1669,6 +1669,7 @@ a {
 }
 
 .year-more-btn {
+    text-decoration: none;
     margin-top: 0;
     max-width: 100%;
     border: 1px solid rgba(255,255,255,.24);
@@ -1759,7 +1760,7 @@ body.loading {
     position: absolute;
     inset: -4%;
     z-index: -2;
-    background: url('./img/main-block.png') center/cover no-repeat;
+    background: url('../img/main-block.png') center/cover no-repeat;
     transform: scale(1.035);
     animation: heroBackgroundDrift 28s ease-in-out infinite alternate;
 }

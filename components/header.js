@@ -20,15 +20,24 @@
     const ROOT = SCRIPT_URL ? new URL('../', SCRIPT_URL).href : './';
     const HOME = ROOT + 'index.html';
 
+    /* стили компонента подключаем сами, если страница забыла добавить <link> */
+    if (SCRIPT_URL && !document.querySelector('link[href*="header.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = ROOT + 'components/header.css';
+        document.head.appendChild(link);
+    }
+
     /* на главной ссылки остаются «#якорями», на остальных страницах ведут на index.html#якорь */
     const trimIndex = path => path.replace(/index\.html$/, '');
     const onHome = trimIndex(location.pathname) === trimIndex(new URL(HOME).pathname);
-    const href = hash => (onHome ? hash : HOME + hash);
+    /* page — отдельная страница (например heroes.html); без неё ссылка ведёт на якорь главной */
+    const href = (hash, page) => (page ? ROOT + page : (onHome ? hash : HOME + hash));
 
     /* key — для атрибута active; main — в верхней панели (десктоп), все пункты — в боковом меню */
     const LINKS = [
         { key: 'home',      hash: '#top',       label: 'Главная', main: true },
-        { key: 'heroes',    hash: '#heroes',    label: 'Герои',   main: true },
+        { key: 'heroes',    hash: '#heroes',    page: 'heroes.html', label: 'Герои', main: true },
         { key: 'history',   hash: '#history',   label: 'История', main: true },
         { key: 'battles',   hash: '#battles',   label: 'Битвы',   main: true },
         { key: 'map',       hash: '#map',       label: 'Карта' },
@@ -36,7 +45,7 @@
     ];
 
     const topLink = (l, active) =>
-        `<a href="${href(l.hash)}" class="nav-link${l.key === active ? ' active' : ''}">${l.label}</a>`;
+        `<a href="${href(l.hash, l.page)}" class="nav-link${l.key === active ? ' active' : ''}">${l.label}</a>`;
 
     const template = active => {
         const main = LINKS.filter(l => l.main);
@@ -66,7 +75,7 @@
 <div class="side-panel" id="sidePanel" aria-hidden="true">
     <button class="close-btn" id="closePanel" aria-label="Закрыть меню">✕</button>
     <nav class="side-nav">
-        ${LINKS.map(l => `<a href="${href(l.hash)}">${l.label}</a>`).join('\n        ')}
+        ${LINKS.map(l => `<a href="${href(l.hash, l.page)}">${l.label}</a>`).join('\n        ')}
     </nav>
 </div>`;
     };
@@ -109,7 +118,7 @@
             if (!onHome || !('IntersectionObserver' in window)) return;
             const links = [...this.querySelectorAll('.nav-link')];
             const targets = LINKS
-                .filter(l => l.hash !== '#top')
+                .filter(l => l.hash !== '#top' && !l.page)
                 .map(l => document.getElementById(l.hash.slice(1)))
                 .filter(Boolean);
             if (!targets.length) return;
