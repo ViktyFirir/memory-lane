@@ -83,7 +83,8 @@ svg,img{display:block}
 .hp-table td{padding:calc(16*var(--u)) calc(22*var(--u));border-top:1px solid #d6d6d6;border-left:1px solid #d6d6d6;line-height:1.45;vertical-align:middle}
 .hp-table td:first-child{border-left:0}
 .hp-table td.loc{background:#d9d9d9;text-align:center;width:22%}
-.hp-table td:nth-child(2){width:30%}
+.hp-table td.tp{width:28%}
+.hp-table td.pn,.hp-table th:last-child{width:84px;text-align:center}
 
 /* ===== 4. Карта ===== */
 .hp-mapsec{margin-top:calc(70*var(--u));text-align:center}
@@ -91,7 +92,7 @@ svg,img{display:block}
 .logo img{width:50%;height:auto;animation:float 3.2s ease-in-out infinite}
 .hp-mapsec h2{font-weight:700;font-size:max(18px,calc(26*var(--u)))}
 .hp-mapsec>p{max-width:calc(900*var(--u));margin:0 auto calc(26*var(--u));color:#ccc}
-.hp-map{border-radius:calc(18*var(--u));overflow:hidden;height:calc(300*var(--u));min-height:220px;background:#e6e6e6;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.hp-map{position:relative;z-index:0;border-radius:calc(18*var(--u));overflow:hidden;height:calc(440*var(--u));min-height:340px;background:#e6e6e6;box-shadow:0 8px 24px rgba(0,0,0,.5)}
 .hp-map iframe{width:100%;height:100%;border:0}
 
 /* ===== Адаптив ===== */
@@ -169,3 +170,50 @@ svg,img{display:block}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes sway{from{translate:0 0;rotate:-2deg}to{translate:0 14px;rotate:2deg}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+/* ===== Несколько абзацев текста ===== */
+.hp-text p+p{margin-top:.8em}
+.hp-text ul{margin-top:calc(16*var(--u))}
+.hp-text li{line-height:1.6}
+
+/* ===== Плашка «Данные уточняются» ===== */
+.hp-note{border-left:4px solid var(--red-hi)}
+.hp-note h3{color:var(--red)}
+
+/* ===== Таблица мемориалов: строки открываются на карте ===== */
+.hp-hint{font-size:max(11px,calc(13*var(--u)));color:#999;margin:calc(-12*var(--u)) 0 calc(16*var(--u))}
+.hp-table tbody tr.hp-go{cursor:pointer}
+.hp-table tbody tr.hp-go:focus-visible{outline:2px solid var(--red-hi);outline-offset:-2px}
+.hp-table tbody tr.hp-go.on td:not(.loc){background:#f3dcdc}
+.hp-pinbtn{display:inline-grid;place-items:center;width:34px;height:34px;border:0;border-radius:50%;background:transparent;color:var(--red-hi);cursor:pointer;transition:.2s}
+.hp-table tr.hp-go:hover .hp-pinbtn,.hp-pinbtn:focus-visible,.hp-table tr.hp-go.on .hp-pinbtn{background:var(--red-hi);color:#fff;transform:scale(1.1)}
+
+/* ===== Карта памяти (Leaflet) ===== */
+.hp-mapbar{display:flex;justify-content:center;margin:0 0 calc(16*var(--u))}
+.hp-mapall{border:0;border-radius:99px;background:var(--red);color:#fff;font:600 max(12px,calc(14*var(--u))) "Montserrat",sans-serif;padding:.7em 1.8em;cursor:pointer;transition:.25s}
+.hp-mapall:hover{background:var(--red-hi);transform:translateY(-2px)}
+.hp-mapfail{position:absolute;inset:0;display:grid;place-items:center;color:#333;z-index:5;padding:20px}
+.hp-maplegend{margin:calc(14*var(--u)) auto 0;font-size:max(11px,calc(12*var(--u)));color:#999;max-width:calc(900*var(--u))}
+.hp-dotapprox{display:inline-block;width:10px;height:10px;border-radius:50%;background:#c01414;opacity:.55;margin-right:6px}
+.hp-map .leaflet-control-attribution{font-size:10px}
+.map-marker{background:none;border:0;overflow:visible}
+.mpin{position:absolute;left:0;top:0;width:30px;height:40px;transform:translate(-50%,-100%);color:var(--red-hi);filter:drop-shadow(0 3px 3px rgba(0,0,0,.45));transition:transform .2s,color .2s}
+.mpin svg{display:block}
+.map-marker:hover .mpin{transform:translate(-50%,-100%) scale(1.15)}
+.map-marker.is-approx .mpin{color:#a35a5a;opacity:.85}
+.mp-pop .leaflet-popup-content-wrapper{border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.mp-pop .leaflet-popup-content{margin:14px 18px;font-family:"Montserrat",sans-serif;color:#222;line-height:1.4}
+.mp-type{font-weight:700;color:var(--red);font-size:14px;margin-bottom:4px}
+.mp-addr{font-size:13px;margin-bottom:6px}
+.mp-place{font-size:12px;color:#777}
+.mp-approx{font-size:11px;color:#a35a5a;margin-top:6px}
+
+/* ===== Источники ===== */
+.hp-src{margin-top:calc(60*var(--u));text-align:left}
+.hp-src h2{font-size:max(16px,calc(22*var(--u)));font-weight:700}
+.hp-src ul{margin:calc(10*var(--u)) 0 0 1.1em;display:grid;gap:6px}
+.hp-src li{font-size:max(11px,calc(13*var(--u)));color:#aaa}
+.hp-src li::marker{color:#c01414}
+.hp-src a{color:#ddd;border-bottom:1px solid rgba(255,255,255,.25);transition:.2s}
+.hp-src a:hover{color:#ff5a5a;border-color:#ff5a5a}
+@media(max-width:700px){.hp-table td.pn,.hp-table th:last-child{width:64px}}
