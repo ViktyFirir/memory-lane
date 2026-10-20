@@ -35,12 +35,6 @@
         { hash: '#map',       label: 'Карта' }
     ];
 
-    const SOCIALS = [
-        { url: '#', label: 'Facebook',  icon: 'fab fa-facebook-f' },
-        { url: '#', label: 'Twitter',   icon: 'fab fa-twitter' },
-        { url: '#', label: 'Instagram', icon: 'fab fa-instagram' }
-    ];
-
     const template = () => `
 <footer class="footer">
     <div class="footer-hero">
@@ -58,9 +52,6 @@
             <div class="footer-menu-block">
                 <div class="footer-menu-top">
                     <h3>Навигация по сайту</h3>
-                    <div class="footer-socials">
-                        ${SOCIALS.map(s => `<a href="${s.url}" aria-label="${s.label}"><i class="${s.icon}"></i></a>`).join('\n                        ')}
-                    </div>
                 </div>
                 <div class="footer-menu-bottom">
                     <nav>

@@ -8,7 +8,13 @@ const pager = document.getElementById("pager");
 const empty = document.getElementById("empty");
 const input = document.getElementById("searchInput");
 
-let list = heroes.slice();
+/* герои с полной страницей — в начало, «пустые» (только краткая справка) — в конец; внутри групп порядок сохраняется */
+const isFull = (h) => !!(h.before || h.deeds || h.awards || h.memorials);
+const sorted = heroes.map((h, i) => ({ h, i }))
+  .sort((a, b) => (isFull(b.h) - isFull(a.h)) || (a.i - b.i))
+  .map((x) => x.h);
+
+let list = sorted.slice();
 let page = 1;
 
 const io = new IntersectionObserver((entries) => {
@@ -66,7 +72,7 @@ function goTo(n) { page = n; renderCards(); renderPager(); document.getElementBy
 
 function search() {
   const q = input.value.trim().toLowerCase();
-  list = heroes.filter((h) => (h.name + " " + h.text).toLowerCase().includes(q));
+  list = sorted.filter((h) => (h.name + " " + h.text).toLowerCase().includes(q));
   page = 1; renderCards(); renderPager();
 }
 
