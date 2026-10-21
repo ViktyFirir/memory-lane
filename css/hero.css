@@ -196,6 +196,11 @@ svg,img{display:block}
 .hp-mapfail[hidden]{display:none}
 .hp-maplegend{margin:calc(14*var(--u)) auto 0;font-size:max(11px,calc(12*var(--u)));color:#999;max-width:calc(900*var(--u))}
 .hp-dotapprox{display:inline-block;width:10px;height:10px;border-radius:50%;background:#c01414;opacity:.55;margin-right:6px}
+.hp-dotline{display:inline-block;width:22px;height:5px;border-radius:3px;background:#c01414;box-shadow:0 0 0 2px #fff;margin:0 8px 2px 2px;vertical-align:middle}
+.hp-mapstatus{margin:calc(10*var(--u)) auto 0;min-height:1.4em;font-size:max(11px,calc(12*var(--u)));color:#bbb;max-width:calc(900*var(--u))}
+.hp-mapstatus:empty{display:none}
+.mp-street{filter:drop-shadow(0 0 5px rgba(192,20,20,.8))}
+.mp-note{font-size:12px;color:#555;margin:0 0 6px}
 .hp-map .leaflet-control-attribution{font-size:10px}
 .map-marker{background:none;border:0;overflow:visible}
 .mpin{position:absolute;left:0;top:0;width:30px;height:40px;transform:translate(-50%,-100%);color:#c01414;filter:drop-shadow(0 3px 3px rgba(0,0,0,.45));transition:transform .2s,color .2s;transform-origin:50% 100%}
