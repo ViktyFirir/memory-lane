@@ -35,7 +35,7 @@
   const noteWhoCap = noteWhoS ? noteWhoS.charAt(0).toUpperCase() + noteWhoS.slice(1) : "";
   const grp = h.group ? String(h.group).trim() : "";
   const grpTxt = grp ? (/^групп/i.test(grp) ? grp : "Группа " + grp) : "";
-  const note = (noteWhoCap || grpTxt) ? `<div class="hp-white hp-note"><h3>Сведения предоставил</h3>${noteWhoCap ? `<p>${esc(noteWhoCap)}</p>` : ""}${grpTxt ? `<p>${esc(grpTxt)}</p>` : ""}</div>` : "";
+  const note = (noteWhoCap || grpTxt) ? `<div class="hp-white hp-note"><h3>Сведения предоставлены</h3>${noteWhoCap ? `<p>${esc(noteWhoCap)}</p>` : ""}${grpTxt ? `<p>${esc(grpTxt)}</p>` : ""}</div>` : "";
     const top = `<section class="hp-top"><h1>${esc(h.name)}</h1><div class="hp-top-grid">
       <div class="hp-photo">${h.photo ? `<img src="${IMG}${h.photo}" alt="${esc(h.name)}" onerror="this.remove()">` : '<svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 2c-4 0-8 2-8 5v2h16v-2c0-3-4-5-8-5z"/></svg>'}</div>
       <div class="hp-top-right"><div class="hp-white hp-brief"><h2>${ST ? "Кратко" : "Кратко про героя"}</h2><p>${esc(clean(h.brief || h.text))}</p></div>${facts}${note}</div>
@@ -103,8 +103,7 @@
       <div class="hp-map" id="hpMap"><p class="hp-mapfail" id="mapFail" hidden>Карта не загрузилась. Проверьте подключение к интернету или откройте место по ссылкам ниже.</p><div class="hp-maploading" id="mapLoad" hidden><span class="hp-spin"></span>Загружаем точное положение мест из OpenStreetMap…</div></div>
       <div class="hp-mapinfo" id="mapInfo" aria-live="polite"></div>
       <p class="hp-mapstatus" id="mapStatus" aria-live="polite"></p>
-      <p class="hp-maplegend"><span class="hp-dotline"></span> Улица, названная в честь героя, подсвечена красной линией от начала до конца улицы.</p>
-      <p class="hp-maplegend"><span class="hp-dotapprox"></span> Если у места указано «примерное», метка стоит в центре города или посёлка — точный адрес ещё уточняется.</p></section>` : "";
+      <p class="hp-maplegend"><span class="hp-dotline"></span> Улица, названная в честь героя, подсвечена красной линией от начала до конца улицы.</p></section>` : "";
 
   /* 5. Источники */
   const src = (h.sources && h.sources.length) ? `<section class="hp-src"><h2>Источники</h2><ul>${h.sources.map((s) => `<li>${s.u ? `<a href="${esc(s.u)}" target="_blank" rel="noopener noreferrer">${esc(s.t)}</a>` : esc(s.t)}</li>`).join("")}</ul></section>` : "";
@@ -198,7 +197,7 @@
         <a href="https://yandex.ru/maps/?pt=${q.ll[1]},${q.ll[0]}&z=${q.line ? 16 : q.approx ? 12 : 17}&l=map" target="_blank" rel="noopener noreferrer">Яндекс Карты</a>
         <a href="https://www.google.com/maps/search/?api=1&query=${q.ll[0]},${q.ll[1]}" target="_blank" rel="noopener noreferrer">Google Карты</a>
         <a href="https://yandex.ru/maps/?rtext=~${q.ll[0]},${q.ll[1]}&rtt=auto" target="_blank" rel="noopener noreferrer">Построить маршрут</a></div>`;
-    const card = (q) => `<div class="mp-type">${esc(q.type)}${q.approx ? ' <span class="mp-badge">примерное место</span>' : ""}</div><div class="mp-addr">${esc(q.addr)}</div>${q.line ? `<div class="mp-note">Улица подсвечена на карте целиком: ${fmtLen(q.line.len)}</div>` : ""}<div class="mp-place">${esc(q.place)}</div>`;
+    const card = (q) => `<div class="mp-type">${esc(q.type)}</div><div class="mp-addr">${esc(q.addr)}</div>${q.line ? `<div class="mp-note">Улица подсвечена на карте целиком: ${fmtLen(q.line.len)}</div>` : ""}<div class="mp-place">${esc(q.place)}</div>`;
     const tipHtml = (q) => `<div class="mp-tip">${card(q)}</div>`;
     const popHtml = (q) => `<div class="mp-pop-in">${card(q)}${links(q)}</div>`;
 
@@ -492,7 +491,7 @@
       const parts = [];
       if (streetsAll) parts.push("улиц показано целиком: " + lines + " из " + streetsAll);
       if (pts.some((q) => q.g && !q.g.s)) parts.push("мемориалов уточнено по адресу: " + exact);
-      status.textContent = (lines || exact ? "Данные OpenStreetMap — " : "Не удалось получить уточнённые данные, показано примерное положение. ") + (lines || exact ? parts.join("; ") + "." : "");
+      status.textContent = (lines || exact ? "Данные OpenStreetMap — " + parts.join("; ") + "." : "");
     }
     resolveAll().catch(() => { status.textContent = ""; });
   }
