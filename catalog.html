@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Каталог писем героям-родственникам ВОВ — Сохраним память вместе</title>
+    <meta name="description" content="Письма фронтовиков и героев Великой Отечественной войны, сохранённые их семьями.">
+    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Marck+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="components/header.css">
+    <link rel="stylesheet" href="components/footer.css">
+    <link rel="stylesheet" href="css/letters.css">
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
+</head>
+<body class="letters-page">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="paper-edge" x="-3%" y="-3%" width="106%" height="106%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.03" numOctaves="3" seed="8" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+      <feMorphology in="rough" operator="erode" radius="3" result="in"/>
+      <feGaussianBlur in="in" stdDeviation="2" result="inb"/>
+      <feComposite in="rough" in2="inb" operator="out" result="rim"/>
+      <feFlood flood-color="#b88f55" flood-opacity=".75"/>
+      <feComposite in2="rim" operator="in" result="edge"/>
+      <feMerge><feMergeNode in="rough"/><feMergeNode in="edge"/></feMerge>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ФОН «пепелище»: статичный, фиксированный, не скроллится и не анимируется -->
+<div class="ash-bg" aria-hidden="true"></div>
+<div class="ash-sparks" aria-hidden="true"></div>
+<div class="ash-decor" aria-hidden="true">
+    <!-- дальние: мелкие, размытые, полупрозрачные -->
+    <img class="frag far" src="./img/letters/letter-fragment.png" alt="" style="width:150px;top:11%;left:7%;--r:-18deg;--b:3px;--o:.30">
+    <img class="frag far" src="./img/letters/paper-burnt.png"     alt="" style="width:92px;top:20%;right:11%;--r:24deg;--fx:-1;--b:4px;--o:.28">
+    <img class="frag far" src="./img/letters/letter-fragment.png" alt="" style="width:118px;top:50%;left:19%;--r:31deg;--fx:-1;--b:3.5px;--o:.24">
+    <img class="frag far" src="./img/letters/paper-burnt.png"     alt="" style="width:84px;bottom:17%;right:23%;--r:-40deg;--b:3px;--o:.30">
+    <img class="frag far" src="./img/letters/letter-fragment.png" alt="" style="width:108px;top:5%;right:31%;--r:12deg;--b:2.5px;--o:.30">
+    <!-- ближние: крупные и чёткие, жмутся к краям -->
+    <img class="frag near" src="./img/letters/paper-burnt.png"     alt="" style="width:260px;top:38%;left:-80px;--r:-14deg">
+    <img class="frag near" src="./img/letters/letter-fragment.png" alt="" style="width:340px;top:14%;right:-140px;--r:17deg;--fx:-1">
+    <img class="frag near" src="./img/letters/paper-burnt.png"     alt="" style="width:300px;bottom:-50px;right:-90px;--r:160deg;--fx:-1">
+    <img class="frag near" src="./img/letters/letter-fragment.png" alt="" style="width:300px;bottom:3%;left:-120px;--r:-22deg">
+</div>
+
+<site-header></site-header>
+
+<main class="letters-main">
+    <header class="catalog-head">
+        <span class="catalog-kicker">Письма с фронта · 1941–1945</span>
+        <h1>Каталог писем <em>героям-родственникам</em> ВОВ</h1>
+        <p>Эти письма прадедам и прабабушкам написали студенты колледжа. Выберите письмо, чтобы прочитать его целиком.</p>
+        <span class="ember-rule" aria-hidden="true"></span>
+    </header>
+
+    <!-- Карточки строит js/catalog.js из data/letters.js -->
+    <section class="letters-grid" id="lettersGrid" aria-label="Каталог писем"></section>
+
+    <div class="empty-sheet" id="lettersEmpty" hidden>
+        <p class="empty-title">Письма скоро появятся…</p>
+        <p class="empty-text">Мы бережно собираем письма из семейных архивов. Совсем скоро здесь можно будет их прочитать.</p>
+    </div>
+</main>
+
+<site-footer></site-footer>
+
+<script type="module" src="js/catalog.js"></script>
+</body>
+</html>
