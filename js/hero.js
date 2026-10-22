@@ -1,13 +1,20 @@
 // Страница героя: один шаблон для всех. Данные берутся из js/heroes-data.js по ?id=...
 (function () {
   const IMG = "img/heroes/", AW = "img/awards/";
+
   const app = document.getElementById("app");
   const id = new URLSearchParams(location.search).get("id") || heroes[0].id;
   const h = heroes.find((x) => x.id === id);
 
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   // Текст может быть строкой или массивом абзацев
-  const P = (x) => (Array.isArray(x) ? x : [x]).map((t) => `<p>${esc(t)}</p>`).join("");
+  // убираем из описаний фразы «Сведения предоставил…» / «Данные уточняются» — они выводятся отдельной карточкой
+  const PROV = /^\s*(Сведения|Информаци[юя]|Данные)\s+(предоставил|предоставлен)|Часть\s+сведений\s+уточня|Данные\s+уточня/i;
+  // «студент» → «учащийся» (с сохранением падежа и рода)
+  const STU = { "студент": "учащийся", "студента": "учащегося", "студенту": "учащемуся", "студентом": "учащимся", "студенте": "учащемся", "студентка": "учащаяся", "студентки": "учащейся", "студентке": "учащейся", "студенткой": "учащейся", "студентку": "учащуюся", "студенты": "учащиеся", "студентов": "учащихся", "студентам": "учащимся", "студентами": "учащимися", "студентах": "учащихся" };
+  const stu = (t) => String(t).replace(/студент[а-яё]*/gi, (m) => { const r = STU[m.toLowerCase()]; if (!r) return m; return m[0] === m[0].toUpperCase() ? r.charAt(0).toUpperCase() + r.slice(1) : r; });
+  const clean = (t) => stu(String(t).split(/(?<=[.!?…])\s+/).filter((x) => !PROV.test(x)).join(" ").trim());
+  const P = (x) => (Array.isArray(x) ? x : [x]).map(clean).filter(Boolean).map((t) => `<p>${esc(t)}</p>`).join("");
   const LOGO = '<div class="logo"><img src="img/logo.png" alt=""></div>';
   const side = (file) => file ? `<div class="hp-side"><img src="${IMG}${file}" alt="" onerror="var b=this.closest('.hp-block');if(b)b.classList.add('noside');this.parentNode.remove()"></div>` : "";
   const block = (inner, file) => `<div class="hp-block${file ? "" : " noside"}"><div class="hp-text">${inner}</div>${side(file)}</div>`;
@@ -22,10 +29,16 @@
   const facts = (h.birthplace || h.years) ? `<div class="hp-white hp-facts">
       ${h.birthplace ? `<div><h3>Место рождения:</h3><p>${esc(h.birthplace)}</p></div>` : ""}
       ${h.years ? `<div><h3>Годы жизни:</h3><p>${esc(h.years)}</p></div>` : ""}</div>` : "";
-  const note = h.note ? `<div class="hp-white hp-note"><h3>Данные уточняются</h3><p>${esc(h.note)}</p></div>` : "";
+  // «Сведения предоставил» + кто именно (из note берём только имя/должность, без «уточняется»)
+  const noteWho = h.note ? String(h.note).replace(/^\s*Сведения\s+предоставил[аи]?:?\s*/i, "").split(/\.\s+|\.$/)[0].trim().replace(/архивариус(?:а|ом)?\s+колледжа/i, "виртуальный музей колледжа") : "";
+  const noteWhoS = stu(noteWho);
+  const noteWhoCap = noteWhoS ? noteWhoS.charAt(0).toUpperCase() + noteWhoS.slice(1) : "";
+  const grp = h.group ? String(h.group).trim() : "";
+  const grpTxt = grp ? (/^групп/i.test(grp) ? grp : "Группа " + grp) : "";
+  const note = (noteWhoCap || grpTxt) ? `<div class="hp-white hp-note"><h3>Сведения предоставил</h3>${noteWhoCap ? `<p>${esc(noteWhoCap)}</p>` : ""}${grpTxt ? `<p>${esc(grpTxt)}</p>` : ""}</div>` : "";
     const top = `<section class="hp-top"><h1>${esc(h.name)}</h1><div class="hp-top-grid">
       <div class="hp-photo">${h.photo ? `<img src="${IMG}${h.photo}" alt="${esc(h.name)}" onerror="this.remove()">` : '<svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 2c-4 0-8 2-8 5v2h16v-2c0-3-4-5-8-5z"/></svg>'}</div>
-      <div class="hp-top-right"><div class="hp-white hp-brief"><h2>${ST ? "Кратко" : "Кратко про героя"}</h2><p>${esc(h.brief || h.text)}</p></div>${facts}${note}</div>
+      <div class="hp-top-right"><div class="hp-white hp-brief"><h2>${ST ? "Кратко" : "Кратко про героя"}</h2><p>${esc(clean(h.brief || h.text))}</p></div>${facts}${note}</div>
     </div></section>`;
 
   /* 2. Серая панель */
@@ -70,7 +83,7 @@
   /* 3. Мемориалы (строка [тип, адрес, широта, долгота, приблизительно?, геоданные?]) */
   const pts = [];
   let mem = "";
-  if (h.memorials) {
+  if (!ST && h.memorials) { // у героев из раздела «Герои наших студентов» места памяти и карта не показываются
     const rows = h.memorials.map((m) => m.rows.map((r, i) => {
       const has = typeof r[2] === "number" && typeof r[3] === "number";
       let idx = -1;
