@@ -29,18 +29,27 @@
     </div></section>`;
 
   /* 2. Серая панель */
+    
   let story = "";
   if (ST) {
-    // Биография
+    // один общий заголовок «Биография», но фото сохраняются
+    const fileBefore = h.photoBefore;
+    const fileDeeds = h.photoDeeds;
     let bio = "";
-    if (h.before) bio += P(h.before);
-    if (h.deeds) {
-      if (h.deedsIntro) bio += P(h.deedsIntro);
-      bio += `<ul>${h.deeds.map((d) => `<li><b>${esc(d.t)}:</b> ${esc(d.d)}</li>`).join("")}</ul>`;
+    if (h.before) {
+      bio += `<div class="hp-block${fileBefore ? "" : " noside"}"><div class="hp-text">${P(h.before)}</div>${side(fileBefore)}</div>`;
     }
-    if (h.full && !h.before && !h.deeds) bio += P(h.full);
-    if (h.after) bio += P(h.after);
-    if (bio) story += `<div class="hp-text"><h2>Биография</h2>${bio}</div>`;
+    if (h.deeds) {
+      let deedsHtml = "";
+      if (h.deedsIntro) deedsHtml += P(h.deedsIntro);
+      deedsHtml += `<ul>${h.deeds.map((d) => `<li><b>${esc(d.t)}:</b> ${esc(d.d)}</li>`).join("")}</ul>`;
+      bio += `<div class="hp-block${fileDeeds ? "" : " noside"}"><div class="hp-text">${deedsHtml}</div>${side(fileDeeds)}</div>`;
+    }
+    if (h.full && !h.before && !h.deeds) {
+      bio += `<div class="hp-block${fileBefore ? "" : " noside"}"><div class="hp-text">${P(h.full)}</div>${side(fileBefore)}</div>`;
+    }
+    if (h.after) bio += `<div class="hp-text">${P(h.after)}</div>`;
+    if (bio) story += `<div class="hp-text"><h2>Биография</h2></div>${bio}`;
   } else {
     if (h.before) story += block(`<h2>Жизнь до войны</h2>${P(h.before)}`, h.photoBefore);
     if (h.deeds) story += block(`<h2>Подвиги ${W.heroGen}</h2>${h.deedsIntro ? P(h.deedsIntro) : ""}<ul>${h.deeds.map((d) => `<li><b>${esc(d.t)}:</b> ${esc(d.d)}</li>`).join("")}</ul>`, h.photoDeeds);
