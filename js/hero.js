@@ -16,27 +16,41 @@
   document.title = h.name + " — Герои";
   const F = !!h.f; // героиня?
   const W = { his: F ? "её" : "его", hero: F ? "героине" : "герое", heroGen: F ? "героини" : "героя", heroAcc: F ? "героиню" : "героя" };
+  const ST = h.students === true; // герой из раздела «Герои наших студентов»
 
   /* 1. Верхняя панель */
   const facts = (h.birthplace || h.years) ? `<div class="hp-white hp-facts">
       ${h.birthplace ? `<div><h3>Место рождения:</h3><p>${esc(h.birthplace)}</p></div>` : ""}
       ${h.years ? `<div><h3>Годы жизни:</h3><p>${esc(h.years)}</p></div>` : ""}</div>` : "";
   const note = h.note ? `<div class="hp-white hp-note"><h3>Данные уточняются</h3><p>${esc(h.note)}</p></div>` : "";
-  const top = `<section class="hp-top"><h1>${esc(h.name)}</h1><div class="hp-top-grid">
+    const top = `<section class="hp-top"><h1>${esc(h.name)}</h1><div class="hp-top-grid">
       <div class="hp-photo">${h.photo ? `<img src="${IMG}${h.photo}" alt="${esc(h.name)}" onerror="this.remove()">` : '<svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 2c-4 0-8 2-8 5v2h16v-2c0-3-4-5-8-5z"/></svg>'}</div>
-      <div class="hp-top-right"><div class="hp-white hp-brief"><h2>Кратко про ${W.heroAcc}:</h2><p>${esc(h.brief || h.text)}</p></div>${facts}${note}</div>
+      <div class="hp-top-right"><div class="hp-white hp-brief"><h2>${ST ? "Кратко" : "Кратко про героя"}</h2><p>${esc(h.brief || h.text)}</p></div>${facts}${note}</div>
     </div></section>`;
 
   /* 2. Серая панель */
   let story = "";
-  if (h.before) story += block(`<h2>Жизнь до войны</h2>${P(h.before)}`, h.photoBefore);
-  if (h.deeds) story += block(`<h2>Подвиги ${W.heroGen}</h2>${h.deedsIntro ? P(h.deedsIntro) : ""}<ul>${h.deeds.map((d) => `<li><b>${esc(d.t)}:</b> ${esc(d.d)}</li>`).join("")}</ul>`, h.photoDeeds);
-  if (h.full && !h.before && !h.deeds) story += block(`<h2>О ${W.hero}</h2>${P(h.full)}`, h.photoBefore);
-  if (h.after) story += `<div class="hp-text"><h2>Память и жизнь после подвига</h2>${P(h.after)}</div>`;
+  if (ST) {
+    // Биография
+    let bio = "";
+    if (h.before) bio += P(h.before);
+    if (h.deeds) {
+      if (h.deedsIntro) bio += P(h.deedsIntro);
+      bio += `<ul>${h.deeds.map((d) => `<li><b>${esc(d.t)}:</b> ${esc(d.d)}</li>`).join("")}</ul>`;
+    }
+    if (h.full && !h.before && !h.deeds) bio += P(h.full);
+    if (h.after) bio += P(h.after);
+    if (bio) story += `<div class="hp-text"><h2>Биография</h2>${bio}</div>`;
+  } else {
+    if (h.before) story += block(`<h2>Жизнь до войны</h2>${P(h.before)}`, h.photoBefore);
+    if (h.deeds) story += block(`<h2>Подвиги ${W.heroGen}</h2>${h.deedsIntro ? P(h.deedsIntro) : ""}<ul>${h.deeds.map((d) => `<li><b>${esc(d.t)}:</b> ${esc(d.d)}</li>`).join("")}</ul>`, h.photoDeeds);
+    if (h.full && !h.before && !h.deeds) story += block(`<h2>О ${W.hero}</h2>${P(h.full)}`, h.photoBefore);
+    if (h.after) story += `<div class="hp-text"><h2>Память и жизнь после подвига</h2>${P(h.after)}</div>`;
+  }
   if (h.awards) {
     const many = h.awards.length >= 3; // стрелки и пагинация только при 3+ наградах
-    story += `<div class="hp-text" id="awards"><h2>Достижения (список наград)</h2>${h.awardsText ? `<p>${esc(h.awardsText)}</p>` : ""}</div>
-      <a class="hp-redbtn" href="#awards">ДОСТИЖЕНИЯ</a>
+    story += `<div class="hp-text" id="awards"><h2>Награды</h2>${h.awardsText ? `<p>${esc(h.awardsText)}</p>` : ""}</div>
+      <a class="hp-redbtn" href="#awards">НАГРАДЫ</a>
       <div class="hp-car-head"><span>О высочайшем признании заслуг перед государством, как в военное, так и в мирное время.</span>
         ${many ? '<div class="hp-arrows"><button type="button" id="carPrev" aria-label="Назад">‹</button><button type="button" id="carNext" aria-label="Вперёд">›</button></div>' : ""}</div>
       <div class="hp-car" id="car">${h.awards.map((a) => `<article class="hp-award"><div class="aw-img">${a.img ? `<img src="${AW}${a.img}" alt="" onerror="this.remove()">` : ""}</div><h3>${esc(a.t)}</h3><p>${esc(a.d)}</p></article>`).join("")}</div>
@@ -54,7 +68,7 @@
       if (has) { idx = pts.length; pts.push({ type: r[0], addr: r[1], place: m.place, lat: r[2], lng: r[3], approx: !!r[4], g: r[5] || null }); }
       return `<tr${has ? ` class="hp-go" data-i="${idx}" tabindex="0" title="Показать на карте"` : ""}>${i === 0 ? `<td class="loc" rowspan="${m.rows.length}">${esc(m.place)}</td>` : ""}<td class="tp">${esc(r[0])}</td><td class="ad">${esc(r[1])}</td><td class="pn">${has ? `<button type="button" class="hp-pinbtn" data-i="${idx}" aria-label="Показать на карте: ${esc(r[0])}"><svg viewBox="0 0 24 32" width="16" height="21" aria-hidden="true"><path d="M12 0C5.4 0 0 5.2 0 11.7 0 20.4 12 32 12 32s12-11.600 12-20.300C24 5.200 18.600 0 12 0z" fill="currentColor"/><circle cx="12" cy="11.500" r="4.500" fill="#fff"/></svg></button>` : ""}</td></tr>`;
     }).join("")).join("");
-    mem = `<section class="hp-mem"><h2>Места ${F ? "ее" : "его"} памяти</h2><p>${esc(h.memIntro || "Память о " + W.hero + " увековечена в местах, связанных с " + W.his + " жизнью и подвигом.")}</p>
+    mem = `<section class="hp-mem"><h2>Места памяти</h2><p>${esc(h.memIntro || "Память о " + W.hero + " увековечена в местах, связанных с " + W.his + " жизнью и подвигом.")}</p>
       ${pts.length ? '<p class="hp-hint">Нажмите на строку таблицы или на значок метки — место откроется на карте ниже.</p>' : ""}
       <div class="hp-tablewrap"><table class="hp-table"><thead><tr><th>Местоположение</th><th>Тип мемориала</th><th>Адрес / Место</th><th>На карте</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
   }
