@@ -636,6 +636,17 @@ a {
     background: var(--red-bright);
 }
 
+.history-note a.history-mail {
+    color: var(--red-bright);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    word-break: break-all;
+}
+
+.history-note a.history-mail:hover {
+    color: #fff;
+}
+
 .history-image {
     min-height: 450px;
     position: relative;

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сборка кэша карт героев</title>
+<style>
+  body{font:16px/1.5 system-ui,sans-serif;max-width:820px;margin:30px auto;padding:0 16px;color:#222}
+  button{font:inherit;padding:10px 18px;border:0;border-radius:8px;background:#c01414;color:#fff;cursor:pointer;margin-right:8px}
+  button:disabled{background:#aaa;cursor:default}
+  progress{width:100%;height:18px;margin:14px 0}
+  pre{background:#f4f4f4;padding:12px;border-radius:8px;white-space:pre-wrap;max-height:420px;overflow:auto;font-size:13px}
+  .ok{color:#0a7a2f;font-weight:600}
+</style>
+</head>
+<body>
+<h1>Сборка кэша карт героев</h1>
+<p>Страница сама скачает из OpenStreetMap положение улиц и мемориалов, которых ещё нет в <code>js/geo-cache.js</code>, и отдаст обновлённый файл. После этого карты на сайте открываются сразу, без ожидания.</p>
+<ol>
+  <li>Откройте эту страницу в браузере (нужен интернет).</li>
+  <li>Нажмите «Собрать» и подождите, пока шкала дойдёт до конца: около секунды на каждое новое место.</li>
+  <li>Нажмите «Скачать geo-cache.js» и замените им файл в папке <code>js/</code>.</li>
+</ol>
+<label><input type="checkbox" id="retry" checked> перепроверить места, которые раньше не нашлись</label><br><br>
+<button id="go">Собрать</button><button id="dl" disabled>Скачать geo-cache.js</button><button id="rep" disabled>Скачать отчёт</button>
+<progress id="pr" value="0" max="1"></progress>
+<div id="sum"></div>
+<pre id="log"></pre>
+
+<script src="../js/heroes-data.js"></script>
+<script src="../js/geo-cache.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const logEl = $("log"), pr = $("pr");
+  const log = (t) => { logEl.textContent += t + "\n"; logEl.scrollTop = logEl.scrollHeight; };
+  const RAD = Math.PI / 180, sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const NOM_DELAY = window.__FAST ? 0 : 1100; // Nominatim разрешает не больше 1 запроса в секунду
+  const dist = (a, b) => { const dLa = (b[0] - a[0]) * RAD, dLo = (b[1] - a[1]) * RAD; const x = Math.sin(dLa / 2) ** 2 + Math.cos(a[0] * RAD) * Math.cos(b[0] * RAD) * Math.sin(dLo / 2) ** 2; return 12742000 * Math.asin(Math.sqrt(x)); };
+  const hash = (s) => { let x = 0; for (let k = 0; k < s.length; k++) x = (x * 31 + s.charCodeAt(k)) | 0; return (x >>> 0).toString(36); }; // как в js/hero.js
+  const round5 = (p) => p.map((c) => [Math.round(c[0] * 1e5) / 1e5, Math.round(c[1] * 1e5) / 1e5]);
+  const qEsc = (s) => s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  const NOT_STREET = /переулок|завулак|проезд|праезд|тупик|тупік/i, PLACE = /^(place|boundary)$/, ROAD = /^(highway|place|boundary|landuse)$/;
+  const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"];
+
+  async function overpass(query) {
+    const one = async (url) => {
+      const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 30000);
+      try {
+        const r = await fetch(url, { method: "POST", body: "data=" + encodeURIComponent(query), headers: { "Content-Type": "application/x-www-form-urlencoded" }, signal: ctl.signal });
+        if (!r.ok) throw new Error("http");
+        const j = await r.json();
+        if (j && Array.isArray(j.elements)) return j;
+        throw new Error("bad");
+      } finally { clearTimeout(to); }
+    };
+    try { return await Promise.any(OVERPASS.map(one)); } catch (e) { return null; }
+  }
+  let last = 0;
+  async function nominatim(text, q, extra) { // null — сервис не ответил; [] — ничего не найдено
+    const r = q.g.r || 8000, dLa = r / 111320, dLo = r / (111320 * Math.cos(q.fb[0] * RAD));
+    const vb = [q.fb[1] - dLo, q.fb[0] + dLa, q.fb[1] + dLo, q.fb[0] - dLa].join(",");
+    await sleep(Math.max(0, last + NOM_DELAY - Date.now())); last = Date.now();
+    try {
+      const res = await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ru&bounded=1&addressdetails=1&viewbox=" + vb + (extra || "") + "&q=" + encodeURIComponent(text));
+      if (!res.ok) return null;
+      const arr = await res.json();
+      return (Array.isArray(arr) ? arr : []).filter((it) => dist([+it.lat, +it.lon], q.fb) <= r * 1.2);
+    } catch (e) { return null; }
+  }
+  const okHit = (it, text) => { // тот же критерий, что в js/hero.js: если в запросе есть номер дома — нужен сам дом, а не улица или кольцо
+    const cls = it.category || it.class || "";
+    if (!/\d/.test(text)) return true;
+    if (ROAD.test(cls)) return false;
+    return !!(it.address && it.address.house_number) || /^(building|amenity|office|shop|craft|man_made|historic)$/.test(cls);
+  };
+
+  let result = null, reportText = "";
+  function download(name, text) {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
+    a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  async function run() {
+    $("go").disabled = true; logEl.textContent = "";
+    const cache = Object.assign({}, window.GEO_CACHE || {});
+    const retry = $("retry").checked, report = [];
+    // список того, что надо докачать
+    const jobs = [];
+    heroes.forEach((h) => {
+      const pts = [];
+      (h.memorials || []).forEach((m) => m.rows.forEach((r) => {
+        if (typeof r[2] === "number" && typeof r[3] === "number") pts.push({ type: r[0], addr: r[1], place: m.place, fb: [r[2], r[3]], g: r[5] || null });
+      }));
+      const key = (i) => h.id + ":" + i + ":" + hash(JSON.stringify(pts[i].g));
+      const need = pts.map((_, i) => i).filter((i) => pts[i].g && (!cache[key(i)] || (retry && cache[key(i)].k === "none")));
+      if (need.length) jobs.push({ h, pts, key, need });
+    });
+    const total = jobs.reduce((s, j) => s + j.need.length, 0);
+    if (!total) { log("Всё уже есть в кэше, докачивать нечего."); finish(cache, report); return; }
+    log("Нужно уточнить мест: " + total);
+    pr.max = total; pr.value = 0;
+    const tick = () => { pr.value += 1; };
+
+    for (const { h, pts, key, need } of jobs) {
+      log("— " + h.id);
+      const note = (i, msg) => report.push("[" + h.id + "] " + pts[i].place + " — " + pts[i].type + " (" + pts[i].addr + "): " + msg);
+      const streets = need.filter((i) => pts[i].g.s), points = need.filter((i) => !pts[i].g.s);
+
+      if (streets.length) {
+        const body = streets.map((i) => { const q = pts[i]; return `way["highway"]["highway"!~"^(footway|steps|path|cycleway|track|bridleway|corridor|proposed)$"][~"^name(:ru|:be)?$"~"${qEsc(q.g.s)}"](around:${q.g.r || 8000},${q.fb[0]},${q.fb[1]});`; }).join("");
+        const data = await overpass("[out:json][timeout:40];(" + body + ");out geom;");
+        const res = {};
+        if (data) data.elements.forEach((w) => {
+          if (w.type !== "way" || !w.geometry || w.geometry.length < 2) return;
+          const t = w.tags || {}, names = [t.name, t["name:ru"], t["name:be"]].filter(Boolean);
+          if (names.every((n) => NOT_STREET.test(n) && !/улица|вуліца/i.test(n))) return;
+          const p = w.geometry.map((c) => [c.lat, c.lon]), mid = p[Math.floor(p.length / 2)];
+          let best = -1, bd = Infinity;
+          streets.forEach((i) => { if (!names.some((n) => new RegExp(pts[i].g.s).test(n))) return; const d = dist(pts[i].fb, mid); if (d <= (pts[i].g.r || 8000) && d < bd) { bd = d; best = i; } });
+          if (best >= 0) (res[best] = res[best] || []).push(p);
+        });
+        for (const i of streets) {
+          let failed = !data, v = null;
+          if (res[i]) v = { k: "line", paths: res[i].map(round5) };
+          else {
+            const g = pts[i].g;
+            if (g.n) {
+              const arr = await nominatim(g.n, pts[i], "&polygon_geojson=1");
+              if (!arr) failed = true;
+              const it = arr && arr.find((x) => (x.category || x.class) === "highway" && x.geojson && /LineString/.test(x.geojson.type));
+              if (it) { const lines = it.geojson.type === "LineString" ? [it.geojson.coordinates] : it.geojson.coordinates; v = { k: "line", paths: lines.map((l) => round5(l.map((c) => [c[1], c[0]]))) }; }
+            }
+            if (!v && g.fq) {
+              const arr = await nominatim(g.fq, pts[i]);
+              if (!arr) failed = true; else if (arr.length) { v = { k: "pt", lat: +arr[0].lat, lng: +arr[0].lon, precise: false }; note(i, "улицы нет в OpenStreetMap, метка поставлена только в нужный район"); }
+            }
+          }
+          if (v) { cache[key(i)] = v; log("  ✓ " + pts[i].addr); }
+          else if (!failed) { cache[key(i)] = { k: "none" }; note(i, "улица не найдена в OpenStreetMap"); log("  ✗ не найдено: " + pts[i].addr); }
+          else { note(i, "сервис не ответил — запустите сборку ещё раз"); log("  ? сервис не ответил: " + pts[i].addr); }
+          tick();
+        }
+      }
+
+      for (const i of points) {
+        const g = pts[i].g;
+        let hit = null, failed = false;
+        for (const text of g.q || []) {
+          const arr = await nominatim(text, pts[i]);
+          if (!arr) { failed = true; continue; }
+          const good = arr.filter((x) => okHit(x, text));
+          if (good.length) { const it = good[0]; hit = { k: "pt", lat: +it.lat, lng: +it.lon, precise: !PLACE.test(it.category || it.class || ""), by: text }; break; }
+        }
+        if (hit) {
+          const d = Math.round(dist([hit.lat, hit.lng], pts[i].fb)), by = hit.by; delete hit.by;
+          cache[key(i)] = hit; log("  ✓ " + pts[i].addr + " (запрос «" + by + "»)");
+          if (hit.precise && d > 300) note(i, "OpenStreetMap ставит метку в " + d + " м от старых координат (запрос «" + by + "») — проверьте: https://www.openstreetmap.org/?mlat=" + hit.lat + "&mlon=" + hit.lng + "#map=18/" + hit.lat + "/" + hit.lng);
+          if (!hit.precise && !g.a) note(i, "найден только населённый пункт, а не сам объект (запрос «" + by + "»)");
+        } else if (!failed) { cache[key(i)] = { k: "none" }; note(i, "не найдено, на карте будет «примерное место»"); log("  ✗ не найдено: " + pts[i].addr); }
+        else { note(i, "сервис не ответил — запустите сборку ещё раз"); log("  ? сервис не ответил: " + pts[i].addr); }
+        tick();
+      }
+    }
+    finish(cache, report);
+  }
+
+  function finish(cache, report) {
+    const n = Object.keys(cache).length, ok = Object.values(cache).filter((v) => v.k !== "none").length;
+    result = "// Готовый кэш данных OpenStreetMap. Собран tools/build-geo-cache.html " + new Date().toISOString().slice(0, 10) + ". Не править вручную.\nwindow.GEO_CACHE = " + JSON.stringify(cache) + ";\n";
+    reportText = report.length ? report.join("\n") + "\n" : "Замечаний нет.\n";
+    $("sum").innerHTML = '<p class="ok">Готово. В кэше записей: ' + n + " (с найденным положением: " + ok + "). Замечаний для проверки: " + report.length + ".</p>";
+    if (report.length) log("\nЗамечания:\n" + report.join("\n"));
+    $("dl").disabled = false; $("rep").disabled = false; $("go").disabled = false;
+  }
+  $("go").onclick = () => run().catch((e) => { log("Ошибка: " + e); $("go").disabled = false; });
+  $("dl").onclick = () => download("geo-cache.js", result);
+  $("rep").onclick = () => download("geo-report.txt", reportText);
+})();
+</script>
+</body>
+</html>
