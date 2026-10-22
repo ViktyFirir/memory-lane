@@ -64,7 +64,7 @@
               "RelativeDocumentMoniker": "js\\heroes-data.js",
               "ToolTip": "D:\\MemoryLane\\js\\heroes-data.js",
               "RelativeToolTip": "js\\heroes-data.js",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJIHAAAAAAAAAAAUwKgHAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2026-10-22T08:28:56.492Z",
               "EditorCaption": ""
@@ -79,8 +79,7 @@
               "RelativeToolTip": "heroes.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-10-22T08:28:46.172Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-22T08:28:46.172Z"
             },
             {
               "$type": "Document",
@@ -92,8 +91,7 @@
               "RelativeToolTip": "hero.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-10-22T08:28:29.419Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-22T08:28:29.419Z"
             }
           ]
         },
