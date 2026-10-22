@@ -37,10 +37,11 @@
     /* key — для атрибута active; main — в верхней панели (десктоп), все пункты — в боковом меню */
     const LINKS = [
         { key: 'home',      hash: '#top',       label: 'Главная', main: true },
-        { key: 'heroes',    hash: '#heroes',    page: 'heroes.html', label: 'Герои', main: true },
+        { key: 'heroes',    hash: '#heroes',    page: 'heroes.html',  label: 'Герои',   main: true },
+        { key: 'letters',   hash: '#letters',   page: 'catalog.html', label: 'Письма',  main: true },
         { key: 'history',   hash: '#history',   label: 'История', main: true },
         { key: 'battles',   hash: '#battles',   label: 'Битвы',   main: true },
-        { key: 'map',       hash: '#map',       label: 'Карта' },
+        { key: 'map',       hash: '#map',       label: 'Карта',   main: true },
         { key: 'chronicle', hash: '#chronicle', label: 'Хроника' }
     ];
 
@@ -57,7 +58,7 @@
         </button>
 
         <div class="nav-group">
-            ${main.slice(0, 2).map(l => topLink(l, active)).join('\n            ')}
+            ${main.slice(0, 3).map(l => topLink(l, active)).join('\n            ')}
         </div>
 
         <a href="${href('#top')}" class="logo-container" aria-label="На главную">
@@ -67,7 +68,7 @@
         </a>
 
         <div class="nav-group">
-            ${main.slice(2).map(l => topLink(l, active)).join('\n            ')}
+            ${main.slice(3).map(l => topLink(l, active)).join('\n            ')}
         </div>
         <button type="button" class="a11y-toggle" aria-pressed="false" aria-label="Версия для слабовидящих" title="Версия для слабовидящих">
             <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
