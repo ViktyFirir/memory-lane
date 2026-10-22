@@ -107,6 +107,32 @@ body.menu-open {
     }
 }
 
+/* шесть пунктов меню: на узких планшетах делаем их компактнее, чтобы не вылезали за экран */
+@media (min-width: 769px) and (max-width: 1000px) {
+    .navbar {
+        gap: 14px;
+        padding-inline: 12px;
+    }
+
+    .nav-group {
+        gap: 6px;
+    }
+
+    .nav-link {
+        padding: 7px 11px;
+        font-size: 13.5px;
+    }
+
+    .logo-circle {
+        width: 64px;
+        height: 64px;
+    }
+
+    .logo-circle img {
+        height: 58px;
+    }
+}
+
 @media (max-width: 768px) {
     .navbar {
         min-height: 82px;

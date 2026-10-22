@@ -56,6 +56,7 @@
     const MENU = [
         { hash: '#top',       label: 'Главная' },
         { hash: '#heroes',    page: 'heroes.html', label: 'Герои' },
+        { hash: '#letters',   page: 'catalog.html', label: 'Письма' },
         { hash: '#chronicle', label: 'История' },
         { hash: '#battles',   label: 'Битвы' },
         { hash: '#map',       label: 'Карта' }
@@ -68,7 +69,7 @@
             <img src="${ROOT}img/Vector.png" class="footer-flower" alt="">
             <div class="section-kicker">ФИНАЛ / ПАМЯТЬ</div>
             <h2 class="footer-title">За каждым именем на этом сайте — судьба человека,<br>который отдал жизнь за мирное небо над нашей головой.</h2>
-            <p class="footer-text">Если у вас есть материалы или истории о ветеранах вашей семьи — свяжитесь с нами. <br>Давайте сохраним память вместе.</p>
+            <p class="footer-text">Если у Вас есть материалы или истории о ветеранах вашей семьи — свяжитесь с нами.<br>Давайте сохраним память вместе.</p>
         </div>
     </div>
 
