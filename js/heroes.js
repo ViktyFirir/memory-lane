@@ -54,40 +54,53 @@ function renderCards() {
   });
 }
 
-function renderPager() {
-  pager.innerHTML = "";
-  const total = Math.ceil(list.length / PER_PAGE);
+function buildPager(el, total, cur, onGo) {
+  el.innerHTML = "";
   if (total < 1) return;
   const add = (n) => {
     const b = document.createElement("button");
     b.textContent = n;
-    if (n === page) b.className = "cur";
-    b.addEventListener("click", () => goTo(n));
-    pager.appendChild(b);
+    if (n === cur) b.className = "cur";
+    b.addEventListener("click", () => onGo(n));
+    el.appendChild(b);
   };
-  const dots = () => { const s = document.createElement("span"); s.textContent = "…"; pager.appendChild(s); };
+  const dots = () => { const s = document.createElement("span"); s.textContent = "…"; el.appendChild(s); };
   if (total <= 10) { for (let n = 1; n <= total; n++) add(n); }
   else {
-    const from = Math.max(2, page - 2), to = Math.min(total - 1, page + 2);
+    const from = Math.max(2, cur - 2), to = Math.min(total - 1, cur + 2);
     add(1); if (from > 2) dots();
     for (let n = from; n <= to; n++) add(n);
     if (to < total - 1) dots(); add(total);
   }
 }
+function renderPager() { buildPager(pager, Math.ceil(list.length / PER_PAGE), page, goTo); }
 /* секция «Герои наших студентов» — все герои с students: true */
 const studentsSection = document.getElementById("students");
 const studentsGrid = document.getElementById("studentsGrid");
+// блок для кнопок страниц: берём из heroes.html, а если его там нет — создаём сами под сеткой студентов
+let studentsPager = document.getElementById("studentsPager");
+if (!studentsPager) {
+  studentsPager = document.createElement("nav");
+  studentsPager.className = "pager";
+  studentsPager.id = "studentsPager";
+  studentsPager.setAttribute("aria-label", "Страницы героев наших студентов");
+  studentsGrid.insertAdjacentElement("afterend", studentsPager);
+}
+const studentHeroes = heroes.filter((h) => h.students === true);
+let studentsPage = 1;
 
 function renderStudents() {
-  const studentHeroes = heroes.filter((h) => h.students === true);
   if (!studentHeroes.length) return;          // нет таких героев — секция остаётся скрытой
   studentsSection.hidden = false;
-  studentHeroes.forEach((h, i) => {
+  studentsGrid.innerHTML = "";
+  studentHeroes.slice((studentsPage - 1) * PER_PAGE, studentsPage * PER_PAGE).forEach((h, i) => {
     const card = makeCard(h, i);
     studentsGrid.appendChild(card);
     io.observe(card);
   });
+  buildPager(studentsPager, Math.ceil(studentHeroes.length / PER_PAGE), studentsPage, goToStudents);
 }
+function goToStudents(n) { studentsPage = n; renderStudents(); studentsSection.scrollIntoView({ behavior: "smooth" }); }
 
 function goTo(n) { page = n; renderCards(); renderPager(); document.getElementById("catalog").scrollIntoView({ behavior: "smooth" }); }
 
@@ -102,5 +115,5 @@ input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(
 document.getElementById("searchForm").addEventListener("submit", (e) => { e.preventDefault(); search(); });
 
 renderCards();
-renderStudents();
 renderPager();
+renderStudents();
