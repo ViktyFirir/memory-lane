@@ -104,7 +104,7 @@
             <section class="footer-info-col">
                 <h4>Организация и ресурсы</h4>
                 <ul>
-                    <li><a href="${COLLEGE.site}" target="_blank" rel="noopener">Официальный сайт ГГПК</a></li>
+                    <li><a href="${COLLEGE.site}" target="_blank" rel="noopener">Официальный сайт колледжа</a></li>
                     ${GOV_LINKS.map(g => `<li><a href="${g.url}" target="_blank" rel="noopener">${g.label}</a></li>`).join('\n                    ')}
                 </ul>
             </section>
@@ -120,8 +120,8 @@
     </div>
 
     <div class="footer-legal">
-        <p class="footer-copy">© ${YEARS} ${COLLEGE.name}. Историко-патриотический проект учащихся и преподавателей УО «ГГПК».</p>
-        <p class="footer-copy">Вышестоящая организация: Министерство образования Республики Беларусь.</p>
+        <p class="footer-copy">© ${YEARS} ${COLLEGE.name}. Историко-патриотический проект учащихся и преподавателей Гродненского государственного политехнического колледжа.</p>
+        <p class="footer-copy">Вышестоящая организация: Главное управление образования Гродненского облисполкома.</p>
         <p class="footer-copy">При использовании материалов сайта ссылка на источник обязательна.</p>
     </div>
 </footer>`;
