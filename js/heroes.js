@@ -27,6 +27,7 @@ function esc(s) {
 }
 
 function photoHTML(h) {
+  if (!h.photo) return PLACEHOLDER;
   return `<img src="${IMG_DIR}${h.photo}" alt="${esc(h.name)}" loading="lazy" onerror="this.parentNode.innerHTML=PLACEHOLDER">`;
 }
 

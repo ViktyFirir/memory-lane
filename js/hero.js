@@ -15,7 +15,7 @@
   if (!h) { app.innerHTML = '<div class="wrap"><div class="inner hp"><p class="hp-404">Герой не найден.</p></div></div>'; return; }
   document.title = h.name + " — Герои";
   const F = !!h.f; // героиня?
-  const W = { his: F ? "её" : "его", hero: F ? "героине" : "герое", heroGen: F ? "героини" : "героя" };
+  const W = { his: F ? "её" : "его", hero: F ? "героине" : "герое", heroGen: F ? "героини" : "героя", heroAcc: F ? "героиню" : "героя" };
 
   /* 1. Верхняя панель */
   const facts = (h.birthplace || h.years) ? `<div class="hp-white hp-facts">
@@ -23,8 +23,8 @@
       ${h.years ? `<div><h3>Годы жизни:</h3><p>${esc(h.years)}</p></div>` : ""}</div>` : "";
   const note = h.note ? `<div class="hp-white hp-note"><h3>Данные уточняются</h3><p>${esc(h.note)}</p></div>` : "";
   const top = `<section class="hp-top"><h1>${esc(h.name)}</h1><div class="hp-top-grid">
-      <div class="hp-photo"><img src="${IMG}${h.photo}" alt="${esc(h.name)}" onerror="this.remove()"></div>
-      <div class="hp-top-right"><div class="hp-white hp-brief"><h2>Кратко про ${W.heroGen}:</h2><p>${esc(h.brief || h.text)}</p></div>${facts}${note}</div>
+      <div class="hp-photo">${h.photo ? `<img src="${IMG}${h.photo}" alt="${esc(h.name)}" onerror="this.remove()">` : '<svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 2c-4 0-8 2-8 5v2h16v-2c0-3-4-5-8-5z"/></svg>'}</div>
+      <div class="hp-top-right"><div class="hp-white hp-brief"><h2>Кратко про ${W.heroAcc}:</h2><p>${esc(h.brief || h.text)}</p></div>${facts}${note}</div>
     </div></section>`;
 
   /* 2. Серая панель */

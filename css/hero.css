@@ -33,6 +33,7 @@ svg,img{display:block}
 .hp-top-grid{display:grid;grid-template-columns:calc(380*var(--u)) 1fr;gap:calc(26*var(--u));align-items:start}
 .hp-photo{min-width:0;border-radius:calc(20*var(--u));overflow:hidden;background:#cbcbcb;aspect-ratio:1/1.08;border:calc(4*var(--u)) solid #fff}
 .hp-photo img{width:100%;height:100%;object-fit:cover}
+.hp-photo .ph{display:block;width:46%;height:46%;margin:27% auto;color:#9a9a9a}
 .hp-top-right{display:flex;flex-direction:column;gap:calc(20*var(--u))}
 .hp-white{background:#fff;color:#222;border-radius:calc(22*var(--u));padding:calc(22*var(--u)) calc(28*var(--u));box-shadow:0 4px 14px rgba(0,0,0,.4)}
 .hp-white h2,.hp-white h3{color:#2a2a8c;font-size:max(12px,calc(15*var(--u)));font-weight:600;margin-bottom:calc(10*var(--u))}
