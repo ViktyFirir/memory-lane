@@ -70,7 +70,27 @@ svg,img{display:block}
 .pager button.cur{background:var(--red-hi);color:#fff}
 .pager span{font-size:max(12px,calc(17*var(--u)));color:#fff}
 .pager:empty{display:none}
+.students { margin-top: 80px; }
+.students[hidden] { display: none; }
 
+.students h2 {
+  width: 895px;
+  max-width: 100%;
+  min-height: 55px;
+  margin: 0 auto 30px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(219, 16, 16, 0.729);
+  border-radius: 53px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+}
 @keyframes fade{from{opacity:0;transform:translateY(20px)}}
 @keyframes zoom{to{transform:scale(1.15)}}
 
@@ -93,6 +113,8 @@ svg,img{display:block}
   .card h3{font-size:14px}.card p{font-size:12.5px}.card .btn{font-size:13px}
   .pager button,.pager span{font-size:13px}
   .f3,.f5,.f6,.f7{display:none}
+  .students h2 { font-size: 20px; padding: 10px 16px; }
+
 }
 @media(max-width:640px){
   .wrap{padding:14px 14px 50px}

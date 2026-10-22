@@ -10,10 +10,11 @@ const input = document.getElementById("searchInput");
 
 /* герои с полной страницей — в начало, «пустые» (только краткая справка) — в конец; внутри групп порядок сохраняется */
 const isFull = (h) => !!(h.before || h.deeds || h.awards || h.memorials);
-const sorted = heroes.map((h, i) => ({ h, i }))
+const sorted = heroes
+  .filter((h) => h.students !== true)          // студенческие герои — только в своей секции
+  .map((h, i) => ({ h, i }))
   .sort((a, b) => (isFull(b.h) - isFull(a.h)) || (a.i - b.i))
   .map((x) => x.h);
-
 let list = sorted.slice();
 let page = 1;
 
@@ -29,19 +30,24 @@ function photoHTML(h) {
   return `<img src="${IMG_DIR}${h.photo}" alt="${esc(h.name)}" loading="lazy" onerror="this.parentNode.innerHTML=PLACEHOLDER">`;
 }
 
+function makeCard(h, i) {
+  const card = document.createElement("article");
+  card.className = "card";
+  card.style.transitionDelay = (i % 3) * 0.1 + "s";
+  card.innerHTML = `
+    <div class="photo">${photoHTML(h)}</div>
+    <h3>${esc(h.name)}</h3>
+    <p>${esc(h.text)}</p>
+    <a class="btn" href="hero.html?id=${encodeURIComponent(h.id)}">Узнать больше</a>`;
+  return card;
+}
+
 function renderCards() {
   grid.innerHTML = "";
   const slice = list.slice((page - 1) * PER_PAGE, page * PER_PAGE);
   empty.hidden = slice.length > 0;
   slice.forEach((h, i) => {
-    const card = document.createElement("article");
-    card.className = "card";
-    card.style.transitionDelay = (i % 3) * 0.1 + "s";
-    card.innerHTML = `
-      <div class="photo">${photoHTML(h)}</div>
-      <h3>${esc(h.name)}</h3>
-      <p>${esc(h.text)}</p>
-      <a class="btn" href="hero.html?id=${encodeURIComponent(h.id)}">Узнать больше</a>`;
+    const card = makeCard(h, i);
     grid.appendChild(card);
     io.observe(card);
   });
@@ -67,6 +73,20 @@ function renderPager() {
     if (to < total - 1) dots(); add(total);
   }
 }
+/* секция «Герои наших студентов» — все герои с students: true */
+const studentsSection = document.getElementById("students");
+const studentsGrid = document.getElementById("studentsGrid");
+
+function renderStudents() {
+  const studentHeroes = heroes.filter((h) => h.students === true);
+  if (!studentHeroes.length) return;          // нет таких героев — секция остаётся скрытой
+  studentsSection.hidden = false;
+  studentHeroes.forEach((h, i) => {
+    const card = makeCard(h, i);
+    studentsGrid.appendChild(card);
+    io.observe(card);
+  });
+}
 
 function goTo(n) { page = n; renderCards(); renderPager(); document.getElementById("catalog").scrollIntoView({ behavior: "smooth" }); }
 
@@ -81,4 +101,5 @@ input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(
 document.getElementById("searchForm").addEventListener("submit", (e) => { e.preventDefault(); search(); });
 
 renderCards();
+renderStudents();
 renderPager();
