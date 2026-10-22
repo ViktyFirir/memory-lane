@@ -8,7 +8,8 @@
    и в <body> в самом конце контента:
        <site-footer></site-footer>
 
-   Меню, соцсети и тексты правятся ТОЛЬКО здесь — обновятся на всех страницах.
+   Меню, соцсети, контакты, ссылки и тексты правятся ТОЛЬКО здесь —
+   обновятся на всех страницах.
    ===================================================================== */
 (() => {
     const SCRIPT_URL = document.currentScript ? document.currentScript.src : '';
@@ -26,6 +27,31 @@
     const trimIndex = path => path.replace(/index\.html$/, '');
     const onHome = trimIndex(location.pathname) === trimIndex(new URL(HOME).pathname);
     const href = (hash, page) => (page ? ROOT + page : (onHome ? hash : HOME + hash));
+
+    /* ---------- Данные ---------- */
+    const YEAR_FROM = 2026;                       // год запуска проекта
+    const YEAR_NOW = new Date().getFullYear();
+    const YEARS = YEAR_NOW > YEAR_FROM ? `${YEAR_FROM}–${YEAR_NOW}` : `${YEAR_FROM}`;
+
+    const COLLEGE = {
+        name: 'Учреждение образования «Гродненский государственный политехнический колледж»',
+        site: 'http://ggpk.by/',
+        address: '230001, г. Гродно, ул. Советских пограничников, 2',
+        phone: '+375 (152) 39-36-02',
+        phoneNote: 'приемная',
+        email: 'polyteh@ggpk.by'
+    };
+
+    const GOV_LINKS = [
+        { url: 'http://president.gov.by/', label: 'Президент Республики Беларусь' },
+        { url: 'http://edu.gov.by/',       label: 'Министерство образования Республики Беларусь' },
+        { url: 'http://pravo.by/',         label: 'Национальный правовой Интернет-портал' }
+    ];
+
+    const LEGAL_LINKS = [
+        { page: 'privacy.html', label: 'Политика обработки персональных данных' },
+        { page: 'cookies.html', label: 'Использование файлов cookie' }
+    ];
 
     const MENU = [
         { hash: '#top',       label: 'Главная' },
@@ -71,7 +97,41 @@
             </div>
         </div>
     </div>
-    <div class="footer-legal"><a href="#">Политика обработки персональных данных</a></div>
+
+    <div class="footer-info">
+        <div class="footer-info-grid">
+            <section class="footer-info-col">
+                <h4>Контакты</h4>
+                <address>
+                    <p>${COLLEGE.address}</p>
+                    <p>Тел.: <a href="tel:${COLLEGE.phone.replace(/[^+\d]/g, '')}">${COLLEGE.phone}</a> (${COLLEGE.phoneNote})</p>
+                    <p>E-mail: <a href="mailto:${COLLEGE.email}">${COLLEGE.email}</a></p>
+                </address>
+            </section>
+
+            <section class="footer-info-col">
+                <h4>Организация и ресурсы</h4>
+                <ul>
+                    <li><a href="${COLLEGE.site}" target="_blank" rel="noopener">Официальный сайт ГГПК</a></li>
+                    ${GOV_LINKS.map(g => `<li><a href="${g.url}" target="_blank" rel="noopener">${g.label}</a></li>`).join('\n                    ')}
+                </ul>
+            </section>
+
+            <section class="footer-info-col">
+                <h4>Правовая информация</h4>
+                <ul>
+                    ${LEGAL_LINKS.map(l => `<li><a href="${ROOT}${l.page}">${l.label}</a></li>`).join('\n                    ')}
+                    <li><button type="button" class="footer-a11y" aria-pressed="false"><i class="fas fa-eye" aria-hidden="true"></i> Версия для слабовидящих</button></li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <div class="footer-legal">
+        <p class="footer-copy">© ${YEARS} ${COLLEGE.name}. Историко-патриотический проект учащихся и преподавателей УО «ГГПК».</p>
+        <p class="footer-copy">Вышестоящая организация: Министерство образования Республики Беларусь.</p>
+        <p class="footer-copy">При использовании материалов сайта ссылка на источник обязательна.</p>
+    </div>
 </footer>`;
 
     /* иконки соцсетей (Font Awesome): подключаем сами, если страница этого не сделала */
@@ -83,11 +143,29 @@
         document.head.appendChild(link);
     }
 
+    /* ---------- Версия для слабовидящих ----------
+       Класс на <html>, состояние хранится в localStorage и действует на всех страницах.
+       Применяем сразу при загрузке скрипта, чтобы не было «мигания». */
+    const A11Y_KEY = 'a11y-mode';
+    const readA11y = () => { try { return localStorage.getItem(A11Y_KEY) === '1'; } catch (e) { return false; } };
+    const writeA11y = on => { try { localStorage.setItem(A11Y_KEY, on ? '1' : '0'); } catch (e) {} };
+    document.documentElement.classList.toggle('a11y', readA11y());
+
     class SiteFooter extends HTMLElement {
         connectedCallback() {
             if (this.dataset.ready) return;
             this.dataset.ready = '1';
             this.innerHTML = template();
+
+            const btn = this.querySelector('.footer-a11y');
+            const sync = () => btn.setAttribute('aria-pressed', document.documentElement.classList.contains('a11y'));
+            btn.addEventListener('click', () => {
+                const on = document.documentElement.classList.toggle('a11y');
+                writeA11y(on);
+                document.dispatchEvent(new Event('a11y-change'));
+            });
+            document.addEventListener('a11y-change', sync);
+            sync();
         }
     }
 

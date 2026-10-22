@@ -186,3 +186,138 @@
 site-footer {
     display: block;
 }
+
+/* ============ Информационный блок (контакты, ссылки, право) ============ */
+.footer-info {
+    background: #f4f4f4;
+    color: #333;
+    padding: 45px 8% 35px;
+    border-top: 1px solid #e2e2e2;
+}
+
+.footer-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-info-col h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 14px;
+    color: #111;
+}
+
+.footer-info-col address {
+    font-style: normal;
+}
+
+.footer-info-col p,
+.footer-info-col li {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 8px;
+}
+
+.footer-info-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-info-col a {
+    color: #444;
+    text-decoration: none;
+}
+
+.footer-info-col a:hover {
+    color: var(--red);
+    text-decoration: underline;
+}
+
+.footer-a11y {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid #444;
+    border-radius: 24px;
+    background: #fff;
+    color: #111;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+}
+
+.footer-a11y:hover,
+.footer-a11y[aria-pressed="true"] {
+    background: #111;
+    color: #fff;
+}
+
+.footer-legal {
+    padding: 18px 8%;
+}
+
+.footer-copy {
+    margin: 0 0 4px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .footer-info {
+        padding: 35px 6% 25px;
+    }
+
+    .footer-info-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        text-align: center;
+    }
+}
+
+/* ============ Версия для слабовидящих (html.a11y) ============ */
+html.a11y {
+    font-size: 125%;
+}
+
+html.a11y body,
+html.a11y body * {
+    background-image: none !important;
+    background-color: #000 !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+}
+
+html.a11y body {
+    line-height: 1.7;
+    letter-spacing: .02em;
+}
+
+html.a11y a {
+    color: #ffd400 !important;
+    -webkit-text-fill-color: #ffd400 !important;
+    text-decoration: underline !important;
+}
+
+html.a11y img {
+    filter: grayscale(1) contrast(1.1);
+}
+
+html.a11y [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+html.a11y .footer-a11y {
+    border: 2px solid #fff;
+}

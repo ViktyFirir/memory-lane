@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Использование файлов cookie</title>
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="components/header.css">
+    <link rel="stylesheet" href="components/footer.css">
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
+    <style>
+        body { background: #fff; color: #111; }
+        .legal-page { max-width: 900px; margin: 0 auto; padding: 150px 24px 70px; line-height: 1.7; }
+        .legal-page h1 { font-size: clamp(26px, 4vw, 38px); margin: 0 0 8px; }
+        .legal-page .legal-date { color: #777; font-size: 14px; margin: 0 0 36px; }
+        .legal-page h2 { font-size: 22px; margin: 36px 0 12px; }
+        .legal-page p, .legal-page li { font-size: 16px; }
+        .legal-page ul { padding-left: 22px; }
+        .legal-page li { margin-bottom: 6px; }
+        .legal-page a { color: var(--red, #9e0000); }
+        @media (max-width: 768px) { .legal-page { padding-top: 120px; } }
+    </style>
+</head>
+<body>
+    <site-header></site-header>
+
+    <main class="legal-page">
+        <h1>Использование файлов cookie</h1>
+        <p class="legal-date">Редакция от 21 октября 2026 г.</p>
+
+        <h2>1. Что это такое</h2>
+        <p>Cookie — небольшие текстовые файлы, которые сайт сохраняет в браузере пользователя. Похожим образом работает локальное хранилище браузера (localStorage). Они помогают сайту запоминать настройки и работать корректно.</p>
+
+        <h2>2. Что используется на этом сайте</h2>
+        <ul>
+            <li><strong>Настройка «Версия для слабовидящих».</strong> Если вы включаете этот режим, его состояние сохраняется в локальном хранилище браузера (ключ <code>a11y-mode</code>), чтобы режим сохранялся при переходе между страницами. Эти данные не передаются на сервер и не содержат персональных сведений.</li>
+            <li><strong>Технические данные.</strong> Сервер, на котором размещён сайт, может фиксировать служебную информацию о запросах (IP-адрес, время, тип браузера) для обеспечения работы и безопасности.</li>
+        </ul>
+        <p>Для отображения иконок социальных сетей сайт загружает шрифт значков Font Awesome с внешнего ресурса (cdnjs.cloudflare.com). При этом браузер обращается к серверу этого ресурса, и он может получить технические данные запроса.</p>
+        <p>Сервисы веб-аналитики и рекламные cookie на сайте не используются. Если они будут подключены, эта страница будет обновлена.</p>
+
+        <h2>3. Как управлять cookie</h2>
+        <p>Вы можете удалить или заблокировать cookie и данные сайта в настройках своего браузера. Отключение локального хранилища не нарушит работу сайта, но настройка «Версия для слабовидящих» не будет запоминаться между страницами.</p>
+
+        <h2>4. Дополнительная информация</h2>
+        <p>Порядок обработки персональных данных описан в <a href="privacy.html">Политике обработки персональных данных</a>. Вопросы можно направить на <a href="mailto:polyteh@ggpk.by">polyteh@ggpk.by</a>.</p>
+    </main>
+
+    <site-footer></site-footer>
+</body>
+</html>

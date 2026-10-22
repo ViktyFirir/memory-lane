@@ -69,6 +69,9 @@
         <div class="nav-group">
             ${main.slice(2).map(l => topLink(l, active)).join('\n            ')}
         </div>
+        <button type="button" class="a11y-toggle" aria-pressed="false" aria-label="Версия для слабовидящих" title="Версия для слабовидящих">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
     </nav>
 </header>
 
@@ -108,6 +111,19 @@
             $('#closePanel').addEventListener('click', closeMenu);
             this.querySelectorAll('.side-nav a').forEach(a => a.addEventListener('click', closeMenu));
             document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+                        /* версия для слабовидящих (общая с футером: класс html.a11y + localStorage) */
+            const eye = $('.a11y-toggle');
+            const A11Y_KEY = 'a11y-mode';
+            const syncEye = () => eye.setAttribute('aria-pressed', document.documentElement.classList.contains('a11y'));
+            eye.addEventListener('click', () => {
+                const on = document.documentElement.classList.toggle('a11y');
+                try { localStorage.setItem(A11Y_KEY, on ? '1' : '0'); } catch (e) {}
+                document.dispatchEvent(new Event('a11y-change'));
+            });
+            document.addEventListener('a11y-change', syncEye);
+            try { document.documentElement.classList.toggle('a11y', localStorage.getItem(A11Y_KEY) === '1'); } catch (e) {}
+            syncEye();
 
             /* фон хедера при прокрутке */
             const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 30);
